@@ -1,0 +1,16 @@
+# Licensed or large network images and runtime state
+*.qcow2
+*.qcow2.gz
+*.img
+*.iso
+*.vmdk
+*.vdi
+*.nvram
+
+# Captures, credentials and local EVE-NG/GNS3 state
+*.pcap
+*.pcapng
+*.log
+.env
+.env.*
+!.env.example
