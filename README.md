@@ -1,2 +1,3 @@
-# Networks
-Networks labs (eve-ng, gns3)
+# NetLabs
+
+Воспроизводимые лабораторные стенды EVE-NG и GNS3.
