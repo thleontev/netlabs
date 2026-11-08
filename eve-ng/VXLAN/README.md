@@ -144,3 +144,12 @@ sudo CLIENT_IF=ens4 APPS_IF=ens5 bash scripts/fw-setup.sh
 ## Границы проверок
 
 Скрипт `scripts/check_artifacts.py` проверяет XML, отсутствие конфликтов interface/network id, наличие 6 underlay и 6 access связей, обязательные BGP/OSPF/VNI/VRF секции и непротиворечивость IP-плана. Он **не** может обнаружить недоступные NX-OSv команды, несовместимый image, проблемы boot/KVM или runtime reachability. Тесты выполнены локально, но работу конкретного EVE-хоста надо проверить вручную.
+
+## Дополнительные практические сценарии (break/fix)
+
+В отличие от четырёх последовательных стадий `configs/`, сценарии — это **независимые fault-injection упражнения** на уже запущенной соответствующей стадии. Формат воспроизводит подход из [DDOS](../DDOS/scenarios/) и [MPLS](../MPLS/scenarios/FAULTS.md): исходная проверка → ввод одной неисправности → control-plane/data-plane evidence → точный rollback.
+
+- [Каталог 13 сценариев](scenarios/README.md) — от baseline/ECMP до VTEP blackhole, RT, Type-5, межсетевого экрана и PMTUD.
+- [Диагностическая карта](docs/SCENARIO-DIAGNOSTICS.md) — разделение отказов по уровням, команды и шаблон отчёта.
+
+Эти материалы **не добавляют новых устройств** в `.unl`; сценарий MTU требует заменить часть VPCS на Linux при тестировании DF. Сценарии подготовлены по CLI существующих конфигураций, **фактический запуск в EVE-NG/на Nexus 9000v не подтверждён**.
