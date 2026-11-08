@@ -1,0 +1,27 @@
+# 01-evpn-l2: enter commands below in each named EVE VPCS console
+
+# === CLIENT-A / LEAF-01 E1/3 ===
+ip 192.168.10.11/24
+save
+
+# === APP-A / LEAF-01 E1/4 ===
+ip 192.168.20.11/24
+save
+
+# === CLIENT-B / LEAF-02 E1/3 ===
+ip 192.168.10.12/24
+save
+
+# === DB-B / LEAF-02 E1/4 ===
+ip 192.168.30.12/24
+save
+
+# === APP-C / LEAF-03 E1/3 ===
+ip 192.168.20.13/24
+save
+
+# === DB-C / LEAF-03 E1/4 ===
+ip 192.168.30.13/24
+save
+
+# Stage 01: gateway deliberately omitted; inter-VLAN routing is disabled.

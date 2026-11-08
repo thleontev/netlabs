@@ -1,0 +1,34 @@
+digraph MultiAS {
+  graph [rankdir=TB, overlap=false, splines=polyline, nodesep=0.58, ranksep=1.04, bgcolor="white", fontname="DejaVu Sans", label="EVE-NG  |  Multi-AS DDoS Scrubbing / BGP + GRE", labelloc="t", fontsize=22, fontcolor="#192a40", pad=0.4];
+  node [shape=box, style="rounded,filled", fillcolor="#eef3fa", color="#7a95b2", fontname="DejaVu Sans", fontsize=12, margin="0.19,0.11"];
+  edge [color="#7891ae", arrowsize=0.65, penwidth=1.55, fontname="DejaVu Sans", fontsize=10];
+  CLIENT [label="CLIENT\n198.18.100.10",shape=ellipse,fillcolor="#e6f4f1"];
+  BOT1 [label="BOT1\n198.18.101.10",shape=ellipse,fillcolor="#ffeded"];
+  BOT2 [label="BOT2\n198.18.102.10",shape=ellipse,fillcolor="#ffeded"];
+  ACCESSC [label="Access client\nAS65031"];
+  ACCESS1 [label="Access BOT1\nAS65041"];
+  ACCESS2 [label="Access BOT2\nAS65042"];
+  T1 [label="TRANSIT A\nAS65000",fillcolor="#fff1d6"];
+  T2 [label="TRANSIT B\nAS65001",fillcolor="#fff1d6"];
+  CUR1 [label="POP 1 / ACL\nAS65020",fillcolor="#dbf2e8",color="#5caa82"];
+  CUR2 [label="POP 2 / ACL\nAS65020",fillcolor="#dbf2e8",color="#5caa82"];
+  RR [label="CUR-CORE\nOSPF + iBGP RR",fillcolor="#cde9ff",color="#548db6"];
+  ISP1 [label="ISP1\nAS65011"];
+  ISP2 [label="ISP2\nAS65012"];
+  CE [label="CE\nAS65010",fillcolor="#e5eafa"];
+  SERVER [label="Web / VPCS server\n203.0.113.10",shape=ellipse,fillcolor="#e6f4f1"];
+  { rank=same; CLIENT; BOT1; BOT2; }
+  { rank=same; ACCESSC; ACCESS1; ACCESS2; }
+  { rank=same; T1; T2; }
+  { rank=same; CUR1; CUR2; }
+  { rank=same; ISP1; RR; ISP2; }
+  CLIENT -> ACCESSC [dir=none]; BOT1 -> ACCESS1 [dir=none]; BOT2 -> ACCESS2 [dir=none];
+  ACCESSC -> T1 [dir=none]; ACCESS1 -> T2 [dir=none]; ACCESS2 -> T2 [dir=none];
+  T1 -> T2 [label="eBGP", dir=none, constraint=false, penwidth=2.4];
+  T1 -> CUR1 [dir=none]; T2 -> CUR2 [dir=none];
+  T1 -> ISP1 [dir=none]; T2 -> ISP2 [dir=none];
+  CUR1 -> RR [dir=none,label="OSPF + iBGP"]; CUR2 -> RR [dir=none,label="OSPF + iBGP"];
+  ISP1 -> CE [dir=none]; ISP2 -> CE [dir=none]; CE -> SERVER [dir=none];
+  CUR1 -> CE [style="dashed",color="#158963",penwidth=2.6,label="GRE1 / eBGP",constraint=false];
+  CUR2 -> CE [style="dashed",color="#158963",penwidth=2.6,label="GRE2 / eBGP",constraint=false];
+}

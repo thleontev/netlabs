@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="1255" version="1.1" viewBox="0 0 1820 1255" width="1820">
+  <defs/>
+  <rect fill="#F5F8FD" height="1255" width="1820" x="0" y="0"/>
+  <rect fill="#E8F2FC" height="1005" rx="25" stroke="#A9C6E9" stroke-width="2" width="1144" x="244" y="135"/>
+  <rect fill="#F9FBFD" height="990" rx="22" stroke="#B9C8D9" stroke-dasharray="6,5" stroke-width="1.6" width="206" x="12" y="150"/>
+  <rect fill="#F9FBFD" height="990" rx="22" stroke="#B9C8D9" stroke-dasharray="6,5" stroke-width="1.6" width="385" x="1408" y="150"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="31" font-weight="700" text-anchor="start" x="45" y="55">MPLS SERVICE PROVIDER — ADVANCED</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="45" y="90">EVE-NG CE  •  16 routers  •  OSPF area 0  •  MPLS LDP  •  MP-BGP VPNv4  •  dual-homed CE</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" text-anchor="start" x="275" y="174">PROVIDER CORE  /  AS 65000</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" text-anchor="start" x="275" y="201">Route Reflectors are IP control-plane nodes (no MPLS on RR links)</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="37" y="182">CUSTOMER WEST</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1430" y="182">CUSTOMER EAST</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" text-anchor="start" x="275" y="230">Core OSPF metrics are included in the detailed link table</text>
+  <line stroke="#1765C1" stroke-linecap="round" stroke-width="4.6" x1="395" x2="700" y1="450" y2="380">
+    <title>PE-W1 GigabitEthernet0/0 (172.20.1.1) — P1 GigabitEthernet0/0 (172.20.1.2) | 172.20.1.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="395" x2="700" y1="450" y2="895">
+    <title>PE-W1 GigabitEthernet0/1 (172.20.2.1) — P2 GigabitEthernet0/0 (172.20.2.2) | 172.20.2.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="395" x2="700" y1="830" y2="380">
+    <title>PE-W2 GigabitEthernet0/0 (172.20.3.1) — P1 GigabitEthernet0/1 (172.20.3.2) | 172.20.3.0/30</title>
+  </line>
+  <line stroke="#1A9EAE" stroke-linecap="round" stroke-width="4" x1="395" x2="700" y1="830" y2="895">
+    <title>PE-W2 GigabitEthernet0/1 (172.20.4.1) — P2 GigabitEthernet0/1 (172.20.4.2) | 172.20.4.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="700" x2="700" y1="380" y2="895">
+    <title>P1 GigabitEthernet0/2 (172.20.5.1) — P2 GigabitEthernet0/2 (172.20.5.2) | 172.20.5.0/30</title>
+  </line>
+  <line stroke="#1765C1" stroke-linecap="round" stroke-width="4.6" x1="700" x2="1020" y1="380" y2="380">
+    <title>P1 GigabitEthernet0/3 (172.20.6.1) — P3 GigabitEthernet0/0 (172.20.6.2) | 172.20.6.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="700" x2="1020" y1="380" y2="895">
+    <title>P1 GigabitEthernet0/4 (172.20.7.1) — P4 GigabitEthernet0/0 (172.20.7.2) | 172.20.7.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="700" x2="1020" y1="895" y2="380">
+    <title>P2 GigabitEthernet0/3 (172.20.8.1) — P3 GigabitEthernet0/1 (172.20.8.2) | 172.20.8.0/30</title>
+  </line>
+  <line stroke="#1A9EAE" stroke-linecap="round" stroke-width="4" x1="700" x2="1020" y1="895" y2="895">
+    <title>P2 GigabitEthernet0/4 (172.20.9.1) — P4 GigabitEthernet0/1 (172.20.9.2) | 172.20.9.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="1020" x2="1020" y1="380" y2="895">
+    <title>P3 GigabitEthernet0/2 (172.20.10.1) — P4 GigabitEthernet0/2 (172.20.10.2) | 172.20.10.0/30</title>
+  </line>
+  <line stroke="#1765C1" stroke-linecap="round" stroke-width="4.6" x1="1020" x2="1325" y1="380" y2="450">
+    <title>P3 GigabitEthernet0/3 (172.20.11.1) — PE-E1 GigabitEthernet0/0 (172.20.11.2) | 172.20.11.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="1020" x2="1325" y1="895" y2="450">
+    <title>P4 GigabitEthernet0/3 (172.20.12.1) — PE-E1 GigabitEthernet0/1 (172.20.12.2) | 172.20.12.0/30</title>
+  </line>
+  <line stroke="#8396AA" stroke-linecap="round" stroke-width="2.3" x1="1020" x2="1325" y1="380" y2="830">
+    <title>P3 GigabitEthernet0/4 (172.20.13.1) — PE-E2 GigabitEthernet0/0 (172.20.13.2) | 172.20.13.0/30</title>
+  </line>
+  <line stroke="#1A9EAE" stroke-linecap="round" stroke-width="4" x1="1020" x2="1325" y1="895" y2="830">
+    <title>P4 GigabitEthernet0/4 (172.20.14.1) — PE-E2 GigabitEthernet0/1 (172.20.14.2) | 172.20.14.0/30</title>
+  </line>
+  <line stroke="#8064D6" stroke-dasharray="7 6" stroke-linecap="round" stroke-width="2.5" x1="860" x2="700" y1="170" y2="380">
+    <title>RR1 GigabitEthernet0/0 (172.20.15.1) — P1 GigabitEthernet0/5 (172.20.15.2) | 172.20.15.0/30</title>
+  </line>
+  <line stroke="#8064D6" stroke-dasharray="7 6" stroke-linecap="round" stroke-width="2.5" x1="860" x2="1020" y1="1085" y2="895">
+    <title>RR2 GigabitEthernet0/0 (172.20.16.1) — P4 GigabitEthernet0/5 (172.20.16.2) | 172.20.16.0/30</title>
+  </line>
+  <line stroke="#16A07D" stroke-linecap="round" stroke-width="3.4" x1="395" x2="125" y1="450" y2="255">
+    <title>PE-W1 GigabitEthernet0/2 (10.11.1.1) — CE-A-W1 GigabitEthernet0/0 (10.11.1.2) | 10.11.1.0/30</title>
+  </line>
+  <line stroke="#16A07D" stroke-linecap="round" stroke-width="3.4" x1="395" x2="125" y1="830" y2="255">
+    <title>PE-W2 GigabitEthernet0/2 (10.11.2.1) — CE-A-W1 GigabitEthernet0/1 (10.11.2.2) | 10.11.2.0/30</title>
+  </line>
+  <line stroke="#16A07D" stroke-linecap="round" stroke-width="3.4" x1="395" x2="125" y1="830" y2="860">
+    <title>PE-W2 GigabitEthernet0/3 (10.11.3.1) — CE-A-W2 GigabitEthernet0/0 (10.11.3.2) | 10.11.3.0/30</title>
+  </line>
+  <line stroke="#16A07D" stroke-linecap="round" stroke-width="3.4" x1="1325" x2="1600" y1="450" y2="255">
+    <title>PE-E1 GigabitEthernet0/2 (10.11.4.1) — CE-A-E1 GigabitEthernet0/0 (10.11.4.2) | 10.11.4.0/30</title>
+  </line>
+  <line stroke="#16A07D" stroke-linecap="round" stroke-width="3.4" x1="1325" x2="1600" y1="830" y2="860">
+    <title>PE-E2 GigabitEthernet0/2 (10.11.5.1) — CE-A-E2 GigabitEthernet0/0 (10.11.5.2) | 10.11.5.0/30</title>
+  </line>
+  <line stroke="#D08A31" stroke-linecap="round" stroke-width="3.4" x1="395" x2="125" y1="450" y2="550">
+    <title>PE-W1 GigabitEthernet0/3 (10.12.1.1) — CE-B-W GigabitEthernet0/0 (10.12.1.2) | 10.12.1.0/30</title>
+  </line>
+  <line stroke="#D08A31" stroke-linecap="round" stroke-width="3.4" x1="1325" x2="1600" y1="450" y2="550">
+    <title>PE-E1 GigabitEthernet0/3 (10.12.2.1) — CE-B-E GigabitEthernet0/0 (10.12.2.2) | 10.12.2.0/30</title>
+  </line>
+  <g>
+    <rect fill="#E2F0FF" height="70" rx="15" stroke="#1765C1" stroke-width="2.6" width="135" x="327.5" y="415.0"/>
+    <circle cx="344.5" cy="432" fill="#1765C1" fill-opacity="0.1" r="6" stroke="#1765C1" stroke-width="1.2"/>
+    <path d="M341.5,432 h6 M344.5,429 v6" stroke="#1765C1" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="395" y="450">PE-W1</text>
+    <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="395" y="472">PROVIDER EDGE</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="395" y="436">10.255.0.1/32</text>
+  </g>
+  <g>
+    <rect fill="#E2F0FF" height="70" rx="15" stroke="#1765C1" stroke-width="2.6" width="135" x="327.5" y="795.0"/>
+    <circle cx="344.5" cy="812" fill="#1765C1" fill-opacity="0.1" r="6" stroke="#1765C1" stroke-width="1.2"/>
+    <path d="M341.5,812 h6 M344.5,809 v6" stroke="#1765C1" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="395" y="830">PE-W2</text>
+    <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="395" y="852">PROVIDER EDGE</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="395" y="816">10.255.0.2/32</text>
+  </g>
+  <g>
+    <rect fill="#E2F0FF" height="70" rx="15" stroke="#1765C1" stroke-width="2.6" width="135" x="1257.5" y="415.0"/>
+    <circle cx="1274.5" cy="432" fill="#1765C1" fill-opacity="0.1" r="6" stroke="#1765C1" stroke-width="1.2"/>
+    <path d="M1271.5,432 h6 M1274.5,429 v6" stroke="#1765C1" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1325" y="450">PE-E1</text>
+    <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1325" y="472">PROVIDER EDGE</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="1325" y="436">10.255.0.3/32</text>
+  </g>
+  <g>
+    <rect fill="#E2F0FF" height="70" rx="15" stroke="#1765C1" stroke-width="2.6" width="135" x="1257.5" y="795.0"/>
+    <circle cx="1274.5" cy="812" fill="#1765C1" fill-opacity="0.1" r="6" stroke="#1765C1" stroke-width="1.2"/>
+    <path d="M1271.5,812 h6 M1274.5,809 v6" stroke="#1765C1" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1325" y="830">PE-E2</text>
+    <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1325" y="852">PROVIDER EDGE</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="1325" y="816">10.255.0.4/32</text>
+  </g>
+  <g>
+    <rect fill="#EAF2FF" height="70" rx="15" stroke="#366A9E" stroke-width="2.6" width="107" x="646.5" y="345.0"/>
+    <circle cx="663.5" cy="362" fill="#366A9E" fill-opacity="0.1" r="6" stroke="#366A9E" stroke-width="1.2"/>
+    <path d="M660.5,362 h6 M663.5,359 v6" stroke="#366A9E" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="700" y="380">P1</text>
+    <text fill="#366A9E" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="700" y="402">CORE LSR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="700" y="366">10.255.0.11/32</text>
+  </g>
+  <g>
+    <rect fill="#EAF2FF" height="70" rx="15" stroke="#366A9E" stroke-width="2.6" width="107" x="646.5" y="860.0"/>
+    <circle cx="663.5" cy="877" fill="#366A9E" fill-opacity="0.1" r="6" stroke="#366A9E" stroke-width="1.2"/>
+    <path d="M660.5,877 h6 M663.5,874 v6" stroke="#366A9E" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="700" y="895">P2</text>
+    <text fill="#366A9E" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="700" y="917">CORE LSR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="700" y="881">10.255.0.12/32</text>
+  </g>
+  <g>
+    <rect fill="#EAF2FF" height="70" rx="15" stroke="#366A9E" stroke-width="2.6" width="107" x="966.5" y="345.0"/>
+    <circle cx="983.5" cy="362" fill="#366A9E" fill-opacity="0.1" r="6" stroke="#366A9E" stroke-width="1.2"/>
+    <path d="M980.5,362 h6 M983.5,359 v6" stroke="#366A9E" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1020" y="380">P3</text>
+    <text fill="#366A9E" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1020" y="402">CORE LSR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="1020" y="366">10.255.0.13/32</text>
+  </g>
+  <g>
+    <rect fill="#EAF2FF" height="70" rx="15" stroke="#366A9E" stroke-width="2.6" width="107" x="966.5" y="860.0"/>
+    <circle cx="983.5" cy="877" fill="#366A9E" fill-opacity="0.1" r="6" stroke="#366A9E" stroke-width="1.2"/>
+    <path d="M980.5,877 h6 M983.5,874 v6" stroke="#366A9E" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1020" y="895">P4</text>
+    <text fill="#366A9E" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1020" y="917">CORE LSR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="1020" y="881">10.255.0.14/32</text>
+  </g>
+  <g>
+    <rect fill="#F1EBFF" height="70" rx="15" stroke="#8064D6" stroke-width="2.6" width="107" x="806.5" y="135.0"/>
+    <circle cx="823.5" cy="152" fill="#8064D6" fill-opacity="0.1" r="6" stroke="#8064D6" stroke-width="1.2"/>
+    <path d="M820.5,152 h6 M823.5,149 v6" stroke="#8064D6" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="860" y="170">RR1</text>
+    <text fill="#8064D6" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="860" y="192">VPNv4 RR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="860" y="156">10.255.0.21/32</text>
+  </g>
+  <g>
+    <rect fill="#F1EBFF" height="70" rx="15" stroke="#8064D6" stroke-width="2.6" width="107" x="806.5" y="1050.0"/>
+    <circle cx="823.5" cy="1067" fill="#8064D6" fill-opacity="0.1" r="6" stroke="#8064D6" stroke-width="1.2"/>
+    <path d="M820.5,1067 h6 M823.5,1064 v6" stroke="#8064D6" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="860" y="1085">RR2</text>
+    <text fill="#8064D6" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="860" y="1107">VPNv4 RR</text>
+    <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="11.5" font-weight="500" text-anchor="middle" x="860" y="1071">10.255.0.22/32</text>
+  </g>
+  <g>
+    <rect fill="#E6FAF1" height="70" rx="15" stroke="#16A07D" stroke-width="2.6" width="135" x="57.5" y="220.0"/>
+    <circle cx="74.5" cy="237" fill="#16A07D" fill-opacity="0.1" r="6" stroke="#16A07D" stroke-width="1.2"/>
+    <path d="M71.5,237 h6 M74.5,234 v6" stroke="#16A07D" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="125" y="255">CE-A-W1</text>
+    <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="125" y="277">CUST_A</text>
+  </g>
+  <g>
+    <rect fill="#E6FAF1" height="70" rx="15" stroke="#16A07D" stroke-width="2.6" width="135" x="57.5" y="825.0"/>
+    <circle cx="74.5" cy="842" fill="#16A07D" fill-opacity="0.1" r="6" stroke="#16A07D" stroke-width="1.2"/>
+    <path d="M71.5,842 h6 M74.5,839 v6" stroke="#16A07D" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="125" y="860">CE-A-W2</text>
+    <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="125" y="882">CUST_A</text>
+  </g>
+  <g>
+    <rect fill="#E6FAF1" height="70" rx="15" stroke="#16A07D" stroke-width="2.6" width="135" x="1532.5" y="220.0"/>
+    <circle cx="1549.5" cy="237" fill="#16A07D" fill-opacity="0.1" r="6" stroke="#16A07D" stroke-width="1.2"/>
+    <path d="M1546.5,237 h6 M1549.5,234 v6" stroke="#16A07D" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1600" y="255">CE-A-E1</text>
+    <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1600" y="277">CUST_A</text>
+  </g>
+  <g>
+    <rect fill="#E6FAF1" height="70" rx="15" stroke="#16A07D" stroke-width="2.6" width="135" x="1532.5" y="825.0"/>
+    <circle cx="1549.5" cy="842" fill="#16A07D" fill-opacity="0.1" r="6" stroke="#16A07D" stroke-width="1.2"/>
+    <path d="M1546.5,842 h6 M1549.5,839 v6" stroke="#16A07D" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1600" y="860">CE-A-E2</text>
+    <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1600" y="882">CUST_A</text>
+  </g>
+  <g>
+    <rect fill="#FFF5E4" height="70" rx="15" stroke="#D08A31" stroke-width="2.6" width="135" x="57.5" y="515.0"/>
+    <circle cx="74.5" cy="532" fill="#D08A31" fill-opacity="0.1" r="6" stroke="#D08A31" stroke-width="1.2"/>
+    <path d="M71.5,532 h6 M74.5,529 v6" stroke="#D08A31" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="125" y="550">CE-B-W</text>
+    <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="125" y="572">CUST_B</text>
+  </g>
+  <g>
+    <rect fill="#FFF5E4" height="70" rx="15" stroke="#D08A31" stroke-width="2.6" width="135" x="1532.5" y="515.0"/>
+    <circle cx="1549.5" cy="532" fill="#D08A31" fill-opacity="0.1" r="6" stroke="#D08A31" stroke-width="1.2"/>
+    <path d="M1546.5,532 h6 M1549.5,529 v6" stroke="#D08A31" stroke-width="1"/>
+    <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="bold" text-anchor="middle" x="1600" y="550">CE-B-E</text>
+    <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" x="1600" y="572">CUST_B</text>
+  </g>
+  <rect fill="#FFFFFF" height="28" rx="12" stroke="#CAD6E6" stroke-width="1" width="70.78" x="799.61" y="364"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="835" y="383">OSPF 10</text>
+  <rect fill="#FFFFFF" height="28" rx="12" stroke="#CAD6E6" stroke-width="1" width="70.78" x="799.61" y="876"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="835" y="895">OSPF 10</text>
+  <rect fill="#FFFFFF" height="28" rx="12" stroke="#CAD6E6" stroke-width="1" width="108.47999999999999" x="157.76" y="461"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="212" y="480">dual-homed CE</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="600" text-anchor="start" x="28" y="321">10.100.1.0/24</text>
+  <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="600" text-anchor="start" x="28" y="595">10.100.1.0/24</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="600" text-anchor="start" x="40" y="1175">OVERLAPPING IPv4, ISOLATED VRFs</text>
+  <line stroke="#1765C1" stroke-width="4" x1="42" x2="99" y1="1199" y2="1199"/>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="start" x="112" y="1205">Preferred W1→E1</text>
+  <line stroke="#1A9EAE" stroke-width="4" x1="395" x2="452" y1="1199" y2="1199"/>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="start" x="465" y="1205">Preferred W2→E2</text>
+  <line stroke="#8064D6" stroke-dasharray="7 6" stroke-width="4" x1="740" x2="797" y1="1199" y2="1199"/>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="start" x="810" y="1205">OSPF-only RR</text>
+  <line stroke="#16A07D" stroke-width="4" x1="1045" x2="1102" y1="1199" y2="1199"/>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="start" x="1115" y="1205">Customer A</text>
+  <line stroke="#D08A31" stroke-width="4" x1="1315" x2="1372" y1="1199" y2="1199"/>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="start" x="1385" y="1205">Customer B</text>
+</svg>

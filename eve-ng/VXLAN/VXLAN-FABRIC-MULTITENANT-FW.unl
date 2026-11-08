@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lab name="VXLAN-FABRIC-MULTITENANT-FW" id="6db17bd5-2bdf-58e5-a5fd-e1a3c709bd4e" version="1" author="LumaCore Labs">
+  <description>Five Cisco Nexus 9000v nodes, six VPCS hosts plus Debian firewall. Reference original thleontev/netlabs GNS3 VXLAN labs; workbook and stage configurations in companion ZIP.</description>
+  <body>NXOSv9k image (default nxosv9k-9300v-9.3.9); verify management/ethernet numbering before configuring! EVE CE has no guarantee that startup configs are auto-applied. See README.</body>
+  <topology>
+    <nodes>
+      <node id="11" name="SPINE-01" type="qemu" template="nxosv9k" image="nxosv9k-9300v-9.3.9" console="telnet" cpu="2" ram="8192" ethernet="8" uuid="974f9509-541c-5f14-9d19-a019ba58d0fc" delay="0" icon="Switch.png" left="250" top="50">
+        <interface id="1" name="Eth1/1" type="ethernet" network_id="1"/>
+        <interface id="2" name="Eth1/2" type="ethernet" network_id="2"/>
+        <interface id="3" name="Eth1/3" type="ethernet" network_id="3"/>
+      </node>
+      <node id="12" name="SPINE-02" type="qemu" template="nxosv9k" image="nxosv9k-9300v-9.3.9" console="telnet" cpu="2" ram="8192" ethernet="8" uuid="d995ff46-e10d-5a13-b205-8dd42456f798" delay="0" icon="Switch.png" left="780" top="50">
+        <interface id="1" name="Eth1/1" type="ethernet" network_id="4"/>
+        <interface id="2" name="Eth1/2" type="ethernet" network_id="5"/>
+        <interface id="3" name="Eth1/3" type="ethernet" network_id="6"/>
+      </node>
+      <node id="21" name="LEAF-01" type="qemu" template="nxosv9k" image="nxosv9k-9300v-9.3.9" console="telnet" cpu="2" ram="8192" ethernet="8" uuid="a2452ea4-8b3c-579f-a7aa-22f99ee24320" delay="0" icon="Switch.png" left="100" top="280">
+        <interface id="1" name="Eth1/1" type="ethernet" network_id="1"/>
+        <interface id="2" name="Eth1/2" type="ethernet" network_id="4"/>
+        <interface id="3" name="Eth1/3" type="ethernet" network_id="7"/>
+        <interface id="4" name="Eth1/4" type="ethernet" network_id="8"/>
+      </node>
+      <node id="22" name="LEAF-02" type="qemu" template="nxosv9k" image="nxosv9k-9300v-9.3.9" console="telnet" cpu="2" ram="8192" ethernet="8" uuid="d6f1073f-b190-59e2-8b15-52f63c67bd46" delay="0" icon="Switch.png" left="515" top="280">
+        <interface id="1" name="Eth1/1" type="ethernet" network_id="2"/>
+        <interface id="2" name="Eth1/2" type="ethernet" network_id="5"/>
+        <interface id="3" name="Eth1/3" type="ethernet" network_id="9"/>
+        <interface id="4" name="Eth1/4" type="ethernet" network_id="10"/>
+        <interface id="5" name="Eth1/5" type="ethernet" network_id="13"/>
+        <interface id="6" name="Eth1/6" type="ethernet" network_id="14"/>
+      </node>
+      <node id="23" name="LEAF-03" type="qemu" template="nxosv9k" image="nxosv9k-9300v-9.3.9" console="telnet" cpu="2" ram="8192" ethernet="8" uuid="7fd1a1b4-d686-5375-b52c-321c23b9a162" delay="0" icon="Switch.png" left="935" top="280">
+        <interface id="1" name="Eth1/1" type="ethernet" network_id="3"/>
+        <interface id="2" name="Eth1/2" type="ethernet" network_id="6"/>
+        <interface id="3" name="Eth1/3" type="ethernet" network_id="11"/>
+        <interface id="4" name="Eth1/4" type="ethernet" network_id="12"/>
+      </node>
+      <node id="41" name="CLIENT-A" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="edbf81e5-a019-5735-80f4-66279dde1efc" icon="PC.png" left="85" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="7"/>
+      </node>
+      <node id="42" name="APP-A" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="20bd6718-09e9-5959-a1a2-3ffbffe12f56" icon="PC.png" left="215" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="8"/>
+      </node>
+      <node id="43" name="CLIENT-B" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="1302cf53-5450-5d10-8018-86d30951255d" icon="PC.png" left="455" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="9"/>
+      </node>
+      <node id="44" name="DB-B" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="2fead1d8-e061-5818-aaf2-2731ece4aa47" icon="PC.png" left="585" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="10"/>
+      </node>
+      <node id="45" name="APP-C" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="2bbc5d5d-30b6-537f-ac4b-794f9e6711c0" icon="PC.png" left="875" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="11"/>
+      </node>
+      <node id="46" name="DB-C" type="vpcs" template="vpcs" console="telnet" ethernet="1" uuid="166d7aad-8b14-5878-b510-02756e4e2f12" icon="PC.png" left="1005" top="570">
+        <interface id="0" name="eth0" type="ethernet" network_id="12"/>
+      </node>
+      <node id="60" name="FW-LINUX" type="qemu" template="linux" image="linux-vxlan-debian12" console="vnc" cpu="1" ram="1024" ethernet="3" uuid="82b46ad4-d813-5eec-ac18-6d679bea932a" icon="Firewall.png" left="515" top="750">
+        <interface id="1" name="eth1" type="ethernet" network_id="13"/>
+        <interface id="2" name="eth2" type="ethernet" network_id="14"/>
+      </node>
+    </nodes>
+    <networks>
+      <network id="1" name="UL S1-L1 10.0.11.0/31" type="bridge" left="198" top="155"/>
+      <network id="2" name="UL S1-L2 10.0.12.0/31" type="bridge" left="241" top="155"/>
+      <network id="3" name="UL S1-L3 10.0.13.0/31" type="bridge" left="284" top="155"/>
+      <network id="4" name="UL S2-L1 10.0.21.0/31" type="bridge" left="327" top="155"/>
+      <network id="5" name="UL S2-L2 10.0.22.0/31" type="bridge" left="370" top="155"/>
+      <network id="6" name="UL S2-L3 10.0.23.0/31" type="bridge" left="413" top="155"/>
+      <network id="7" name="ACC CLIENT-A VLAN10" type="bridge" left="110" top="480"/>
+      <network id="8" name="ACC APP-A VLAN20" type="bridge" left="285" top="480"/>
+      <network id="9" name="ACC CLIENT-B VLAN10" type="bridge" left="460" top="480"/>
+      <network id="10" name="ACC DB-B VLAN30" type="bridge" left="635" top="480"/>
+      <network id="11" name="ACC APP-C VLAN20" type="bridge" left="810" top="480"/>
+      <network id="12" name="ACC DB-C VLAN30" type="bridge" left="985" top="480"/>
+      <network id="13" name="FW CLIENTS 172.31.10.0/30" type="bridge" left="1160" top="685"/>
+      <network id="14" name="FW APPS 172.31.20.0/30" type="bridge" left="1335" top="685"/>
+    </networks>
+  </topology>
+  <objects/>
+</lab>

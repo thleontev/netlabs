@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="1350" version="1.1" viewBox="0 0 2200 1350" width="2200">
+  <defs/>
+  <rect fill="#F7FAFD" height="1350" width="2200" x="0" y="0"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="33" font-weight="700" text-anchor="start" x="54" y="70">MPLS SP ADVANCED · PHYSICAL LINKS AND IP PLAN</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" text-anchor="start" x="54" y="113">Source of truth: docs/LINKS.csv · Interface indexing exactly matches the .unl file</text>
+  <rect fill="#FFFFFF" height="759" rx="18" stroke="#D5E0EF" stroke-width="1.5" width="1150" x="50" y="154"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="start" x="76" y="187">MPLS / OSPF backbone</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" text-anchor="end" x="1178" y="186">16 inter-router IP links</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="210"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="238">PE-W1 Gi0/0</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="238">⇄  P1 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="238">172.20.1.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="238">cost 10</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="282">PE-W1 Gi0/1</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="282">⇄  P2 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="282">172.20.2.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="282">cost 30</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="298"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="326">PE-W2 Gi0/0</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="326">⇄  P1 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="326">172.20.3.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="326">cost 30</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="370">PE-W2 Gi0/1</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="370">⇄  P2 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="370">172.20.4.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="370">cost 10</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="386"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="414">P1 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="414">⇄  P2 Gi0/2</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="414">172.20.5.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="414">cost 20</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="458">P1 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="458">⇄  P3 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="458">172.20.6.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="458">cost 10</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="474"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="502">P1 Gi0/4</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="502">⇄  P4 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="502">172.20.7.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="502">cost 35</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="546">P2 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="546">⇄  P3 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="546">172.20.8.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="546">cost 35</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="562"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="590">P2 Gi0/4</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="590">⇄  P4 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="590">172.20.9.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="590">cost 10</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="634">P3 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="634">⇄  P4 Gi0/2</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="634">172.20.10.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="634">cost 20</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="650"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="678">P3 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="678">⇄  PE-E1 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="678">172.20.11.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="678">cost 10</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="722">P4 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="722">⇄  PE-E1 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="722">172.20.12.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="722">cost 30</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="738"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="766">P3 Gi0/4</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="766">⇄  PE-E2 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="766">172.20.13.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="766">cost 30</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="810">P4 Gi0/4</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="810">⇄  PE-E2 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="810">172.20.14.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="810">cost 10</text>
+  <rect fill="#EFF5FC" height="44" width="1136" x="57" y="826"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="854">RR1 Gi0/0</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="854">⇄  P1 Gi0/5</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="854">172.20.15.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="854">cost 10</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="75" y="898">RR2 Gi0/0</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="265" y="898">⇄  P4 Gi0/5</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="525" y="898">172.20.16.0/30</text>
+  <text fill="#1765C1" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="1170" y="898">cost 10</text>
+  <rect fill="#FFFFFF" height="363" rx="18" stroke="#D5E0EF" stroke-width="1.5" width="920" x="1230" y="154"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="start" x="1256" y="187">PE–CE / customer VRFs</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="400" text-anchor="end" x="2128" y="186">7 isolated customer links</text>
+  <rect fill="#EFF5FC" height="44" width="906" x="1237" y="210"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="238">PE-W1 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="238">⇄  CE-A-W1 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="238">10.11.1.0/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="238">CUST_A</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="282">PE-W2 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="282">⇄  CE-A-W1 Gi0/1</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="282">10.11.2.0/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="282">CUST_A</text>
+  <rect fill="#EFF5FC" height="44" width="906" x="1237" y="298"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="326">PE-W2 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="326">⇄  CE-A-W2 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="326">10.11.3.0/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="326">CUST_A</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="370">PE-E1 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="370">⇄  CE-A-E1 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="370">10.11.4.0/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="370">CUST_A</text>
+  <rect fill="#EFF5FC" height="44" width="906" x="1237" y="386"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="414">PE-E2 Gi0/2</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="414">⇄  CE-A-E2 Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="414">10.11.5.0/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="414">CUST_A</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="458">PE-W1 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="458">⇄  CE-B-W Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="458">10.12.1.0/30</text>
+  <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="458">CUST_B</text>
+  <rect fill="#EFF5FC" height="44" width="906" x="1237" y="474"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1255" y="502">PE-E1 Gi0/3</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="start" x="1445" y="502">⇄  CE-B-E Gi0/0</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="400" text-anchor="start" x="1705" y="502">10.12.2.0/30</text>
+  <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="end" x="2120" y="502">CUST_B</text>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" font-weight="700" text-anchor="start" x="1248" y="610">Address convention</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="1248" y="663">Core: 172.20.&lt;link-ID&gt;.1–2/30</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="1248" y="697">Customer A: 10.11.x.1 (PE) / .2 (CE)</text>
+  <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="1248" y="731">Customer B: 10.12.x.1 (PE) / .2 (CE)</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="1248" y="766">PE + P + RR Loopbacks: 10.255.0.x/32</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="1248" y="825">Use LINKS.csv for the complete host-address mapping.</text>
+  <rect fill="#F0F6FE" height="260" rx="18" stroke="#C9D9EF" stroke-width="1.5" width="920" x="1230" y="910"/>
+  <text fill="#132641" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="start" x="1250" y="954">VRF AND ROUTE TARGETS</text>
+  <text fill="#16A07D" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="600" text-anchor="start" x="1250" y="1006">CUST_A  →  RT 65000:100</text>
+  <text fill="#D08A31" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="600" text-anchor="start" x="1250" y="1053">CUST_B  →  RT 65000:200</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="400" text-anchor="start" x="1250" y="1101">RD is unique per PE and per VRF.</text>
+  <text fill="#51647D" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="400" text-anchor="start" x="1250" y="1133">CE-A-W1 is dual-homed to PE-W1 and PE-W2.</text>
+</svg>

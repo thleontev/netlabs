@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lab name="MPLS-SP-Advanced" id="1d55d457-c2e1-47ab-a2ea-105aff505001" version="1" scripttimeout="300" countdown="0" lock="0" sat="-1" description="16 nodes: OSPF/LDP MPLS core, redundant VPNv4 route-reflectors, 2 VRFs, multi-homed CE, troubleshooting" body="">
+  <topology>
+    <nodes>
+      <node id="1" name="PE-W1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000001" firstmac="50:00:00:01:00:00" sat="-1" left="355" top="380" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="1"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="2"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="17"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="22"/>
+      </node>
+      <node id="2" name="PE-W2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000002" firstmac="50:00:00:02:00:00" sat="-1" left="355" top="760" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="3"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="4"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="18"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="19"/>
+      </node>
+      <node id="3" name="PE-E1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000003" firstmac="50:00:00:03:00:00" sat="-1" left="1285" top="380" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="11"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="12"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="20"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="23"/>
+      </node>
+      <node id="4" name="PE-E2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000004" firstmac="50:00:00:04:00:00" sat="-1" left="1285" top="760" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="13"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="14"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="21"/>
+      </node>
+      <node id="5" name="P1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000005" firstmac="50:00:00:05:00:00" sat="-1" left="660" top="310" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="1"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="3"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="5"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="6"/>
+        <interface id="4" name="GigabitEthernet0/4" type="ethernet" network_id="7"/>
+        <interface id="5" name="GigabitEthernet0/5" type="ethernet" network_id="15"/>
+      </node>
+      <node id="6" name="P2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000006" firstmac="50:00:00:06:00:00" sat="-1" left="660" top="825" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="2"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="4"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="5"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="8"/>
+        <interface id="4" name="GigabitEthernet0/4" type="ethernet" network_id="9"/>
+      </node>
+      <node id="7" name="P3" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000007" firstmac="50:00:00:07:00:00" sat="-1" left="980" top="310" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="6"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="8"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="10"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="11"/>
+        <interface id="4" name="GigabitEthernet0/4" type="ethernet" network_id="13"/>
+      </node>
+      <node id="8" name="P4" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="1024" ethernet="8" uuid="890a0010-0001-4000-8000-000000000008" firstmac="50:00:00:08:00:00" sat="-1" left="980" top="825" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="7"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="9"/>
+        <interface id="2" name="GigabitEthernet0/2" type="ethernet" network_id="10"/>
+        <interface id="3" name="GigabitEthernet0/3" type="ethernet" network_id="12"/>
+        <interface id="4" name="GigabitEthernet0/4" type="ethernet" network_id="14"/>
+        <interface id="5" name="GigabitEthernet0/5" type="ethernet" network_id="16"/>
+      </node>
+      <node id="9" name="RR1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="768" ethernet="4" uuid="890a0010-0001-4000-8000-000000000009" firstmac="50:00:00:09:00:00" sat="-1" left="820" top="100" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="15"/>
+      </node>
+      <node id="10" name="RR2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="768" ethernet="4" uuid="890a0010-0001-4000-8000-000000000010" firstmac="50:00:00:0a:00:00" sat="-1" left="820" top="1015" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="16"/>
+      </node>
+      <node id="11" name="CE-A-W1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000011" firstmac="50:00:00:0b:00:00" sat="-1" left="85" top="185" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="17"/>
+        <interface id="1" name="GigabitEthernet0/1" type="ethernet" network_id="18"/>
+      </node>
+      <node id="12" name="CE-A-W2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000012" firstmac="50:00:00:0c:00:00" sat="-1" left="85" top="790" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="19"/>
+      </node>
+      <node id="13" name="CE-A-E1" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000013" firstmac="50:00:00:0d:00:00" sat="-1" left="1560" top="185" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="20"/>
+      </node>
+      <node id="14" name="CE-A-E2" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000014" firstmac="50:00:00:0e:00:00" sat="-1" left="1560" top="790" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="21"/>
+      </node>
+      <node id="15" name="CE-B-W" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000015" firstmac="50:00:00:0f:00:00" sat="-1" left="85" top="480" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="22"/>
+      </node>
+      <node id="16" name="CE-B-E" type="qemu" template="vios" image="vios-adventerprisek9-m.SPA.159-3.M6" console="telnet" cpu="1" cpulimit="0" ram="512" ethernet="4" uuid="890a0010-0001-4000-8000-000000000016" firstmac="50:00:00:10:00:00" sat="-1" left="1560" top="480" icon="Router.png" config="0" delay="0" shutdowntime="5">
+        <interface id="0" name="GigabitEthernet0/0" type="ethernet" network_id="23"/>
+      </node>
+    </nodes>
+    <networks>
+      <network id="1" type="bridge" name="PE-W1--P1" left="508" top="345" L2="0" expanded="0" visibility="0"/>
+      <network id="2" type="bridge" name="PE-W1--P2" left="508" top="602" L2="0" expanded="0" visibility="0"/>
+      <network id="3" type="bridge" name="PE-W2--P1" left="508" top="535" L2="0" expanded="0" visibility="0"/>
+      <network id="4" type="bridge" name="PE-W2--P2" left="508" top="792" L2="0" expanded="0" visibility="0"/>
+      <network id="5" type="bridge" name="P1--P2" left="660" top="568" L2="0" expanded="0" visibility="0"/>
+      <network id="6" type="bridge" name="P1--P3" left="820" top="310" L2="0" expanded="0" visibility="0"/>
+      <network id="7" type="bridge" name="P1--P4" left="820" top="568" L2="0" expanded="0" visibility="0"/>
+      <network id="8" type="bridge" name="P2--P3" left="820" top="568" L2="0" expanded="0" visibility="0"/>
+      <network id="9" type="bridge" name="P2--P4" left="820" top="825" L2="0" expanded="0" visibility="0"/>
+      <network id="10" type="bridge" name="P3--P4" left="980" top="568" L2="0" expanded="0" visibility="0"/>
+      <network id="11" type="bridge" name="P3--PE-E1" left="1132" top="345" L2="0" expanded="0" visibility="0"/>
+      <network id="12" type="bridge" name="P4--PE-E1" left="1132" top="602" L2="0" expanded="0" visibility="0"/>
+      <network id="13" type="bridge" name="P3--PE-E2" left="1132" top="535" L2="0" expanded="0" visibility="0"/>
+      <network id="14" type="bridge" name="P4--PE-E2" left="1132" top="792" L2="0" expanded="0" visibility="0"/>
+      <network id="15" type="bridge" name="RR1--P1" left="740" top="205" L2="0" expanded="0" visibility="0"/>
+      <network id="16" type="bridge" name="RR2--P4" left="900" top="920" L2="0" expanded="0" visibility="0"/>
+      <network id="17" type="bridge" name="PE-W1--CE-A-W1" left="220" top="282" L2="0" expanded="0" visibility="0"/>
+      <network id="18" type="bridge" name="PE-W2--CE-A-W1" left="220" top="472" L2="0" expanded="0" visibility="0"/>
+      <network id="19" type="bridge" name="PE-W2--CE-A-W2" left="220" top="775" L2="0" expanded="0" visibility="0"/>
+      <network id="20" type="bridge" name="PE-E1--CE-A-E1" left="1422" top="282" L2="0" expanded="0" visibility="0"/>
+      <network id="21" type="bridge" name="PE-E2--CE-A-E2" left="1422" top="775" L2="0" expanded="0" visibility="0"/>
+      <network id="22" type="bridge" name="PE-W1--CE-B-W" left="220" top="430" L2="0" expanded="0" visibility="0"/>
+      <network id="23" type="bridge" name="PE-E1--CE-B-E" left="1422" top="430" L2="0" expanded="0" visibility="0"/>
+    </networks>
+  </topology>
+  <objects>
+    <configs/>
+  </objects>
+</lab>

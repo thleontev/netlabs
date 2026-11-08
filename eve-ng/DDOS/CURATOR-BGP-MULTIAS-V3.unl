@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<lab name="BGP GRE DDoS Multi-AS Dual Transit v3" id="d5ad4943-91e1-43a8-97a2-832a01c6eae1" version="2" author="netlabs" scripttimeout="300" lock="0">
+  <description>Isolated BGP GRE training: 2 transit AS, 2 uplinks, 2 POPs with iBGP/RR, 3 access AS, dual GRE, route-leak and failover experiments.</description>
+  <topology>
+    <nodes>
+      <node id="1" name="R-T1" type="qemu" template="vios" console="telnet" uuid="e9917550-b743-507a-88bd-274be824e793" ethernet="4" icon="Router.png" left="420" top="260" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="1" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="2" />
+        <interface id="2" name="Gi0/2" type="ethernet" network_id="3" />
+        <interface id="3" name="Gi0/3" type="ethernet" network_id="4" />
+      </node>
+      <node id="2" name="R-T2" type="qemu" template="vios" console="telnet" uuid="70bdb33c-9f56-5afb-bcfc-ffee184bb2d0" ethernet="5" icon="Router.png" left="950" top="260" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="1" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="5" />
+        <interface id="2" name="Gi0/2" type="ethernet" network_id="6" />
+        <interface id="3" name="Gi0/3" type="ethernet" network_id="7" />
+        <interface id="4" name="Gi0/4" type="ethernet" network_id="8" />
+      </node>
+      <node id="3" name="R-CUR1" type="qemu" template="vios" console="telnet" uuid="9763d88e-5517-5e2e-9eaf-6a8f9f23ed1a" ethernet="4" icon="Router.png" left="240" top="480" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="2" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="9" />
+      </node>
+      <node id="4" name="R-CUR2" type="qemu" template="vios" console="telnet" uuid="14f9959e-3a59-553b-b161-1d65b150bac7" ethernet="4" icon="Router.png" left="1130" top="480" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="5" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="10" />
+      </node>
+      <node id="5" name="R-CUR-RR" type="qemu" template="vios" console="telnet" uuid="6364a6cd-8dcb-5eaa-9a1e-e192309322fa" ethernet="4" icon="Router.png" left="685" top="580" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="9" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="10" />
+      </node>
+      <node id="6" name="R-ISP1" type="qemu" template="vios" console="telnet" uuid="600ce0b8-de6a-5802-bb1c-68eaf502c5d5" ethernet="4" icon="Router.png" left="410" top="680" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="3" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="11" />
+      </node>
+      <node id="7" name="R-ISP2" type="qemu" template="vios" console="telnet" uuid="aa95a311-008e-54cf-90b3-db02bb3a189f" ethernet="4" icon="Router.png" left="960" top="680" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="6" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="12" />
+      </node>
+      <node id="8" name="R-CE" type="qemu" template="vios" console="telnet" uuid="0241add8-240f-552b-99c0-4dbce1f9a5df" ethernet="4" icon="Router.png" left="685" top="900" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="11" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="12" />
+        <interface id="2" name="Gi0/2" type="ethernet" network_id="16" />
+      </node>
+      <node id="9" name="R-ACCESS-CLIENT" type="qemu" template="vios" console="telnet" uuid="22faca59-36b6-5c07-8526-c2924f5d09d3" ethernet="4" icon="Router.png" left="80" top="100" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="4" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="13" />
+      </node>
+      <node id="10" name="R-ACCESS-BOT1" type="qemu" template="vios" console="telnet" uuid="bfe93519-84e5-54db-80cc-f68e239730ad" ethernet="4" icon="Router.png" left="1140" top="100" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="7" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="14" />
+      </node>
+      <node id="11" name="R-ACCESS-BOT2" type="qemu" template="vios" console="telnet" uuid="dc278a28-0a59-58dc-9366-a31b090a209e" ethernet="4" icon="Router.png" left="1450" top="100" config="0" delay="0" image="vios-adventerprisek9-m.SPA.159-3.M6" cpu="1" ram="512">
+        <interface id="0" name="Gi0/0" type="ethernet" network_id="8" />
+        <interface id="1" name="Gi0/1" type="ethernet" network_id="15" />
+      </node>
+      <node id="12" name="CLIENT" type="vpcs" template="vpcs" console="telnet" uuid="26212146-3824-5715-98f9-94b622946f34" ethernet="1" icon="Desktop.png" left="80" top="-80" config="0" delay="0">
+        <interface id="0" name="eth0" type="ethernet" network_id="13" />
+      </node>
+      <node id="13" name="BOT1" type="vpcs" template="vpcs" console="telnet" uuid="d5bb6288-2a09-5739-a1c4-933f2494d92e" ethernet="1" icon="Desktop.png" left="1140" top="-80" config="0" delay="0">
+        <interface id="0" name="eth0" type="ethernet" network_id="14" />
+      </node>
+      <node id="14" name="BOT2" type="vpcs" template="vpcs" console="telnet" uuid="95258d38-e494-5205-9c4c-8cad16143b62" ethernet="1" icon="Desktop.png" left="1450" top="-80" config="0" delay="0">
+        <interface id="0" name="eth0" type="ethernet" network_id="15" />
+      </node>
+      <node id="15" name="SERVER" type="vpcs" template="vpcs" console="telnet" uuid="217649fd-c330-5d81-b081-4a9c250cefe9" ethernet="1" icon="Desktop.png" left="685" top="1090" config="0" delay="0">
+        <interface id="0" name="eth0" type="ethernet" network_id="16" />
+      </node>
+    </nodes>
+    <networks>
+      <network id="1" type="bridge" name="T1-T2" left="0" top="0" visibility="0" />
+      <network id="2" type="bridge" name="T1-CUR1" left="0" top="0" visibility="0" />
+      <network id="3" type="bridge" name="T1-ISP1" left="0" top="0" visibility="0" />
+      <network id="4" type="bridge" name="T1-ACCESS-CLIENT" left="0" top="0" visibility="0" />
+      <network id="5" type="bridge" name="T2-CUR2" left="0" top="0" visibility="0" />
+      <network id="6" type="bridge" name="T2-ISP2" left="0" top="0" visibility="0" />
+      <network id="7" type="bridge" name="T2-ACCESS-BOT1" left="0" top="0" visibility="0" />
+      <network id="8" type="bridge" name="T2-ACCESS-BOT2" left="0" top="0" visibility="0" />
+      <network id="9" type="bridge" name="CUR1-CORE" left="0" top="0" visibility="0" />
+      <network id="10" type="bridge" name="CUR2-CORE" left="0" top="0" visibility="0" />
+      <network id="11" type="bridge" name="ISP1-CE" left="0" top="0" visibility="0" />
+      <network id="12" type="bridge" name="ISP2-CE" left="0" top="0" visibility="0" />
+      <network id="13" type="bridge" name="CLIENT-LAN" left="0" top="0" visibility="0" />
+      <network id="14" type="bridge" name="BOT1-LAN" left="0" top="0" visibility="0" />
+      <network id="15" type="bridge" name="BOT2-LAN" left="0" top="0" visibility="0" />
+      <network id="16" type="bridge" name="SERVER-LAN" left="0" top="0" visibility="0" />
+    </networks>
+  </topology>
+</lab>

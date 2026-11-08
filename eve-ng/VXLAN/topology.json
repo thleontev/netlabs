@@ -1,0 +1,109 @@
+{
+  "manifest": [
+    {
+      "name": "VXLAN-FABRIC-5N-6H",
+      "nodes": 11,
+      "links": 12
+    },
+    {
+      "name": "VXLAN-FABRIC-MULTITENANT-FW",
+      "nodes": 12,
+      "links": 14
+    }
+  ],
+  "hosts": [
+    {
+      "host": "CLIENT-A",
+      "leaf": "LEAF-01",
+      "leaf_eth": "Ethernet1/3",
+      "vlan": 10,
+      "ip": "192.168.10.11",
+      "gateway": "192.168.10.1"
+    },
+    {
+      "host": "APP-A",
+      "leaf": "LEAF-01",
+      "leaf_eth": "Ethernet1/4",
+      "vlan": 20,
+      "ip": "192.168.20.11",
+      "gateway": "192.168.20.1"
+    },
+    {
+      "host": "CLIENT-B",
+      "leaf": "LEAF-02",
+      "leaf_eth": "Ethernet1/3",
+      "vlan": 10,
+      "ip": "192.168.10.12",
+      "gateway": "192.168.10.1"
+    },
+    {
+      "host": "DB-B",
+      "leaf": "LEAF-02",
+      "leaf_eth": "Ethernet1/4",
+      "vlan": 30,
+      "ip": "192.168.30.12",
+      "gateway": "192.168.30.1"
+    },
+    {
+      "host": "APP-C",
+      "leaf": "LEAF-03",
+      "leaf_eth": "Ethernet1/3",
+      "vlan": 20,
+      "ip": "192.168.20.13",
+      "gateway": "192.168.20.1"
+    },
+    {
+      "host": "DB-C",
+      "leaf": "LEAF-03",
+      "leaf_eth": "Ethernet1/4",
+      "vlan": 30,
+      "ip": "192.168.30.13",
+      "gateway": "192.168.30.1"
+    }
+  ],
+  "spines": {
+    "SPINE-01": {
+      "id": 11,
+      "router": "10.255.0.11",
+      "leaf_if": {
+        "1": 1,
+        "2": 2,
+        "3": 3
+      },
+      "x": 250
+    },
+    "SPINE-02": {
+      "id": 12,
+      "router": "10.255.0.12",
+      "leaf_if": {
+        "1": 1,
+        "2": 2,
+        "3": 3
+      },
+      "x": 780
+    }
+  },
+  "leaves": {
+    "LEAF-01": {
+      "num": 1,
+      "id": 21,
+      "router": "10.255.0.21",
+      "vtep": "10.254.0.21",
+      "x": 100
+    },
+    "LEAF-02": {
+      "num": 2,
+      "id": 22,
+      "router": "10.255.0.22",
+      "vtep": "10.254.0.22",
+      "x": 515
+    },
+    "LEAF-03": {
+      "num": 3,
+      "id": 23,
+      "router": "10.255.0.23",
+      "vtep": "10.254.0.23",
+      "x": 935
+    }
+  }
+}

@@ -1,0 +1,519 @@
+{
+  "image": "vios-adventerprisek9-m.SPA.159-3.M6",
+  "devices": {
+    "PE-W1": {
+      "role": "PE",
+      "loopback": "10.255.0.1",
+      "position": [
+        355,
+        380
+      ]
+    },
+    "PE-W2": {
+      "role": "PE",
+      "loopback": "10.255.0.2",
+      "position": [
+        355,
+        760
+      ]
+    },
+    "PE-E1": {
+      "role": "PE",
+      "loopback": "10.255.0.3",
+      "position": [
+        1285,
+        380
+      ]
+    },
+    "PE-E2": {
+      "role": "PE",
+      "loopback": "10.255.0.4",
+      "position": [
+        1285,
+        760
+      ]
+    },
+    "P1": {
+      "role": "P",
+      "loopback": "10.255.0.11",
+      "position": [
+        660,
+        310
+      ]
+    },
+    "P2": {
+      "role": "P",
+      "loopback": "10.255.0.12",
+      "position": [
+        660,
+        825
+      ]
+    },
+    "P3": {
+      "role": "P",
+      "loopback": "10.255.0.13",
+      "position": [
+        980,
+        310
+      ]
+    },
+    "P4": {
+      "role": "P",
+      "loopback": "10.255.0.14",
+      "position": [
+        980,
+        825
+      ]
+    },
+    "RR1": {
+      "role": "RR",
+      "loopback": "10.255.0.21",
+      "position": [
+        820,
+        100
+      ]
+    },
+    "RR2": {
+      "role": "RR",
+      "loopback": "10.255.0.22",
+      "position": [
+        820,
+        1015
+      ]
+    },
+    "CE-A-W1": {
+      "role": "CE-A",
+      "loopback": "",
+      "position": [
+        85,
+        185
+      ]
+    },
+    "CE-A-W2": {
+      "role": "CE-A",
+      "loopback": "",
+      "position": [
+        85,
+        790
+      ]
+    },
+    "CE-A-E1": {
+      "role": "CE-A",
+      "loopback": "",
+      "position": [
+        1560,
+        185
+      ]
+    },
+    "CE-A-E2": {
+      "role": "CE-A",
+      "loopback": "",
+      "position": [
+        1560,
+        790
+      ]
+    },
+    "CE-B-W": {
+      "role": "CE-B",
+      "loopback": "",
+      "position": [
+        85,
+        480
+      ]
+    },
+    "CE-B-E": {
+      "role": "CE-B",
+      "loopback": "",
+      "position": [
+        1560,
+        480
+      ]
+    }
+  },
+  "links": [
+    {
+      "kind": "core",
+      "name": "PE-W1--P1",
+      "a": "PE-W1",
+      "b": "P1",
+      "prefix": "172.20.1.0/30",
+      "a_ip": "172.20.1.1",
+      "b_ip": "172.20.1.2",
+      "ospf_cost": 10,
+      "network_id": 1,
+      "a_if": "GigabitEthernet0/0",
+      "a_if_id": 0,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "PE-W1--P2",
+      "a": "PE-W1",
+      "b": "P2",
+      "prefix": "172.20.2.0/30",
+      "a_ip": "172.20.2.1",
+      "b_ip": "172.20.2.2",
+      "ospf_cost": 30,
+      "network_id": 2,
+      "a_if": "GigabitEthernet0/1",
+      "a_if_id": 1,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "PE-W2--P1",
+      "a": "PE-W2",
+      "b": "P1",
+      "prefix": "172.20.3.0/30",
+      "a_ip": "172.20.3.1",
+      "b_ip": "172.20.3.2",
+      "ospf_cost": 30,
+      "network_id": 3,
+      "a_if": "GigabitEthernet0/0",
+      "a_if_id": 0,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "PE-W2--P2",
+      "a": "PE-W2",
+      "b": "P2",
+      "prefix": "172.20.4.0/30",
+      "a_ip": "172.20.4.1",
+      "b_ip": "172.20.4.2",
+      "ospf_cost": 10,
+      "network_id": 4,
+      "a_if": "GigabitEthernet0/1",
+      "a_if_id": 1,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "P1--P2",
+      "a": "P1",
+      "b": "P2",
+      "prefix": "172.20.5.0/30",
+      "a_ip": "172.20.5.1",
+      "b_ip": "172.20.5.2",
+      "ospf_cost": 20,
+      "network_id": 5,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/2",
+      "b_if_id": 2
+    },
+    {
+      "kind": "core",
+      "name": "P1--P3",
+      "a": "P1",
+      "b": "P3",
+      "prefix": "172.20.6.0/30",
+      "a_ip": "172.20.6.1",
+      "b_ip": "172.20.6.2",
+      "ospf_cost": 10,
+      "network_id": 6,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "P1--P4",
+      "a": "P1",
+      "b": "P4",
+      "prefix": "172.20.7.0/30",
+      "a_ip": "172.20.7.1",
+      "b_ip": "172.20.7.2",
+      "ospf_cost": 35,
+      "network_id": 7,
+      "a_if": "GigabitEthernet0/4",
+      "a_if_id": 4,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "P2--P3",
+      "a": "P2",
+      "b": "P3",
+      "prefix": "172.20.8.0/30",
+      "a_ip": "172.20.8.1",
+      "b_ip": "172.20.8.2",
+      "ospf_cost": 35,
+      "network_id": 8,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "P2--P4",
+      "a": "P2",
+      "b": "P4",
+      "prefix": "172.20.9.0/30",
+      "a_ip": "172.20.9.1",
+      "b_ip": "172.20.9.2",
+      "ospf_cost": 10,
+      "network_id": 9,
+      "a_if": "GigabitEthernet0/4",
+      "a_if_id": 4,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "P3--P4",
+      "a": "P3",
+      "b": "P4",
+      "prefix": "172.20.10.0/30",
+      "a_ip": "172.20.10.1",
+      "b_ip": "172.20.10.2",
+      "ospf_cost": 20,
+      "network_id": 10,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/2",
+      "b_if_id": 2
+    },
+    {
+      "kind": "core",
+      "name": "P3--PE-E1",
+      "a": "P3",
+      "b": "PE-E1",
+      "prefix": "172.20.11.0/30",
+      "a_ip": "172.20.11.1",
+      "b_ip": "172.20.11.2",
+      "ospf_cost": 10,
+      "network_id": 11,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "P4--PE-E1",
+      "a": "P4",
+      "b": "PE-E1",
+      "prefix": "172.20.12.0/30",
+      "a_ip": "172.20.12.1",
+      "b_ip": "172.20.12.2",
+      "ospf_cost": 30,
+      "network_id": 12,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "P3--PE-E2",
+      "a": "P3",
+      "b": "PE-E2",
+      "prefix": "172.20.13.0/30",
+      "a_ip": "172.20.13.1",
+      "b_ip": "172.20.13.2",
+      "ospf_cost": 30,
+      "network_id": 13,
+      "a_if": "GigabitEthernet0/4",
+      "a_if_id": 4,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "core",
+      "name": "P4--PE-E2",
+      "a": "P4",
+      "b": "PE-E2",
+      "prefix": "172.20.14.0/30",
+      "a_ip": "172.20.14.1",
+      "b_ip": "172.20.14.2",
+      "ospf_cost": 10,
+      "network_id": 14,
+      "a_if": "GigabitEthernet0/4",
+      "a_if_id": 4,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "core",
+      "name": "RR1--P1",
+      "a": "RR1",
+      "b": "P1",
+      "prefix": "172.20.15.0/30",
+      "a_ip": "172.20.15.1",
+      "b_ip": "172.20.15.2",
+      "ospf_cost": 10,
+      "network_id": 15,
+      "a_if": "GigabitEthernet0/0",
+      "a_if_id": 0,
+      "b_if": "GigabitEthernet0/5",
+      "b_if_id": 5
+    },
+    {
+      "kind": "core",
+      "name": "RR2--P4",
+      "a": "RR2",
+      "b": "P4",
+      "prefix": "172.20.16.0/30",
+      "a_ip": "172.20.16.1",
+      "b_ip": "172.20.16.2",
+      "ospf_cost": 10,
+      "network_id": 16,
+      "a_if": "GigabitEthernet0/0",
+      "a_if_id": 0,
+      "b_if": "GigabitEthernet0/5",
+      "b_if_id": 5
+    },
+    {
+      "kind": "ce",
+      "name": "PE-W1--CE-A-W1",
+      "a": "PE-W1",
+      "b": "CE-A-W1",
+      "prefix": "10.11.1.0/30",
+      "a_ip": "10.11.1.1",
+      "b_ip": "10.11.1.2",
+      "ospf_cost": null,
+      "vrf": "CUST_A",
+      "network_id": 17,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "ce",
+      "name": "PE-W2--CE-A-W1",
+      "a": "PE-W2",
+      "b": "CE-A-W1",
+      "prefix": "10.11.2.0/30",
+      "a_ip": "10.11.2.1",
+      "b_ip": "10.11.2.2",
+      "ospf_cost": null,
+      "vrf": "CUST_A",
+      "network_id": 18,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/1",
+      "b_if_id": 1
+    },
+    {
+      "kind": "ce",
+      "name": "PE-W2--CE-A-W2",
+      "a": "PE-W2",
+      "b": "CE-A-W2",
+      "prefix": "10.11.3.0/30",
+      "a_ip": "10.11.3.1",
+      "b_ip": "10.11.3.2",
+      "ospf_cost": null,
+      "vrf": "CUST_A",
+      "network_id": 19,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "ce",
+      "name": "PE-E1--CE-A-E1",
+      "a": "PE-E1",
+      "b": "CE-A-E1",
+      "prefix": "10.11.4.0/30",
+      "a_ip": "10.11.4.1",
+      "b_ip": "10.11.4.2",
+      "ospf_cost": null,
+      "vrf": "CUST_A",
+      "network_id": 20,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "ce",
+      "name": "PE-E2--CE-A-E2",
+      "a": "PE-E2",
+      "b": "CE-A-E2",
+      "prefix": "10.11.5.0/30",
+      "a_ip": "10.11.5.1",
+      "b_ip": "10.11.5.2",
+      "ospf_cost": null,
+      "vrf": "CUST_A",
+      "network_id": 21,
+      "a_if": "GigabitEthernet0/2",
+      "a_if_id": 2,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "ce",
+      "name": "PE-W1--CE-B-W",
+      "a": "PE-W1",
+      "b": "CE-B-W",
+      "prefix": "10.12.1.0/30",
+      "a_ip": "10.12.1.1",
+      "b_ip": "10.12.1.2",
+      "ospf_cost": null,
+      "vrf": "CUST_B",
+      "network_id": 22,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    },
+    {
+      "kind": "ce",
+      "name": "PE-E1--CE-B-E",
+      "a": "PE-E1",
+      "b": "CE-B-E",
+      "prefix": "10.12.2.0/30",
+      "a_ip": "10.12.2.1",
+      "b_ip": "10.12.2.2",
+      "ospf_cost": null,
+      "vrf": "CUST_B",
+      "network_id": 23,
+      "a_if": "GigabitEthernet0/3",
+      "a_if_id": 3,
+      "b_if": "GigabitEthernet0/0",
+      "b_if_id": 0
+    }
+  ],
+  "customers": {
+    "CE-A-W1": {
+      "vrf": "CUST_A",
+      "asn": 65110,
+      "lan": "10.100.1.1/24"
+    },
+    "CE-A-W2": {
+      "vrf": "CUST_A",
+      "asn": 65120,
+      "lan": "10.100.2.1/24"
+    },
+    "CE-A-E1": {
+      "vrf": "CUST_A",
+      "asn": 65130,
+      "lan": "10.100.3.1/24"
+    },
+    "CE-A-E2": {
+      "vrf": "CUST_A",
+      "asn": 65140,
+      "lan": "10.100.4.1/24"
+    },
+    "CE-B-W": {
+      "vrf": "CUST_B",
+      "asn": 65210,
+      "lan": "10.100.1.1/24"
+    },
+    "CE-B-E": {
+      "vrf": "CUST_B",
+      "asn": 65220,
+      "lan": "10.100.3.1/24"
+    }
+  }
+}
