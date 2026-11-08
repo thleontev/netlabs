@@ -86,3 +86,7 @@ show ip route vrf CLIENTS
 show ip route vrf APPS
 show running-config interface nve1
 ```
+
+## Отдельные break/fix задания
+
+Полные карточки с инъекцией неисправности и откатом: [scenarios/README.md](../scenarios/README.md). Для поиска симптома по слоям использовать [SCENARIO-DIAGNOSTICS.md](SCENARIO-DIAGNOSTICS.md). Стадии 00–03 остаются неизменными.
