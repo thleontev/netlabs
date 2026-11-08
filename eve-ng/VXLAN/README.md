@@ -1,3 +1,14 @@
+## Исправление импорта и вариант без Linux-образа (2026-11-09)
+
+В исходных `.unl` не было встроенных startup-config; в обновлённых файлах используется `<objects><configs>` (base64) и `config="1"`. Подробная инструкция: [STARTUP-CONFIG-REPAIR.md](docs/STARTUP-CONFIG-REPAIR.md).
+
+- `VXLAN-FABRIC-5N-6H.unl` — embedded EVPN L2 configs.
+- `VXLAN-FABRIC-MULTITENANT-NOFW.unl` — multi-VRF без Linux firewall (подходит для проверки Fabric/VRF, **не** даёт меж-VRF транзит).
+- `VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl` — multi-VRF с Cisco IOSv ACL router вместо Linux firewall, конфигурация встроена, **не stateful**. Требуется установленный образ IOSv.
+- `VXLAN-FABRIC-MULTITENANT-FW.unl` — исходный сценарий c Debian/nftables; требует установленного QEMU образа `linux-vxlan-debian12` и ручной настройки Linux.
+
+Отказ открытия лаборатории без текста ошибки EVE-NG не диагностирован. Наличие отсутствующего образа — возможная проблема, но не подтверждённая причина отказа UI.
+
 # VXLAN EVPN Leaf–Spine — повторение старых лабораторий в EVE-NG CE
 
 **Версия пакета:** 2026-10-26 · **платформа:** Cisco Nexus 9000v (ориентир 9.3.9) · **статус:** артефакты сгенерированы и статически проверены, **запуск в EVE-NG и проверка CLI на реальных образах не производились**.
