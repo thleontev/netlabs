@@ -1,16 +1,19 @@
 # MPLS Service Provider Advanced — EVE-NG CE
 
-**Version 2.0 · 2026-10-27 · standalone updated lab**
+**Version 2.1 · 2026-11-09 · startup-config fix**
 
 Не элементарная цепочка из P/PE: **16 маршрутизаторов, 23 физических линка, 2 Route Reflector, 4 PE, 4 P, 6 CE, 2 VRF, dual-homed CE, перекрывающаяся клиентская IPv4-адресация, 7 аварийных сценариев**.
 
-**Статус**: выполнена *офлайн-валидация*, но EVE-NG/IOSv здесь не запускались. `.unl` не содержит образов и не применяет конфигурации автоматически. Корректность команд на вашей конкретной версии IOSv проверяется запуском в EVE-NG.
+**Статус:** исправлена загрузка startup-config: три новых `.unl` включают по 16 встроенных Base64-конфигураций (`config=1`, `<objects><configs>`). Оригинальная `MPLS-SP-Advanced.unl` сохранена как topology-only. Выполнена *офлайн-валидация*, **реальная загрузка IOSv в EVE-NG не проверена**. Образы IOSv не входят в репозиторий.
 
 ## Файлы
 
 | Файл | Назначение |
 |---|---|
-| `MPLS-SP-Advanced.unl` | Топология EVE-NG Community Edition (16 QEMU vIOS nodes, 23 bridge links) |
+| `MPLS-SP-Advanced-AUTO-L3VPN.unl` | **Рекомендуется:** 16 готовых startup-config для OSPF, LDP, MPLS L3VPN, MP-BGP VPNv4 и PE–CE eBGP |
+| `MPLS-SP-Advanced-AUTO-LDP.unl` | 16 startup-config для OSPF + MPLS/LDP, без BGP/VRF |
+| `MPLS-SP-Advanced-AUTO-UNDERLAY.unl` | 16 startup-config только IP/OSPF для самостоятельной настройки MPLS |
+| `MPLS-SP-Advanced.unl` | Исходная topology-only схема EVE-NG (16 QEMU IOSv, 23 линка), **без** встроенных настроек |
 | `docs/topology.svg` / `.png` | Общая схема: два основных направления, CE, P, PE, RR |
 | `docs/link-plan.svg` / `.png` | Подробный план всех интерфейсов, подсетей и OSPF-cost |
 | `docs/LINKS.csv` | Точная таблица `Gi0/x`, IP каждого конца линка, OSPF-cost, VRF |
@@ -22,10 +25,11 @@
 | `docs/DIAGNOSTICS.md` | Команды по уровням control plane/data plane |
 | `docs/EXTENSIONS.md` | Следующие отдельные модули (Inter-AS, TE, L2VPN, EVPN/SR); пока не входят в рабочую `.unl` |
 | `scenarios/FAULTS.md` | Семь break/fix-сценариев с конфигурациями ввода/отката |
-| `tools/build_lab.py` | Детерминированная генерация `.unl`, CLI и CSV/JSON (stdlib) |
-| `tools/render_diagrams.py` | Генерация SVG/PNG из модели (`svgwrite`, `cairosvg`) |
-| `tools/validate_lab.py` | Офлайн-проверка структуры, IP-плана, связности и файлов |
-| `tools/rewrite_image.py` | Замена имени QEMU image в `.unl`, без перестройки топологии |
+| `tools/embed_startup_configs.py` | Генерация 3 independent `.unl` с Base64 startup-config из существующих `.cfg` |
+| `tools/validate_startup_configs.py` | Проверка 48 встроенных конфигураций и точного соответствия `.cfg` |
+| `tools/validate_lab.py` | Офлайн-проверка XML, числа узлов и линков, ссылок на конфигурации |
+| `tools/rewrite_image.py` | Замена имени QEMU image без потери встроенных startup-config |
+| `IMPORT-RU.md` | Пошаговый импорт EVE-NG CE, проверка Startup-configs и инструкция Wipe |
 
 ## Архитектура
 
@@ -56,31 +60,13 @@ Cisco CML документирует для IOSv поддержку **MPLS, MPLS
 
 ## Запуск EVE-NG CE
 
-**Ресурсы:** 8 × P/PE с 1 GB, 2 × RR с 768 MB, 6 × CE с 512 MB = **12.5 GB гостевой RAM**, без накладных расходов гипервизора и EVE-NG. Рекомендовано 20–24+ GB свободной RAM и достаточное CPU время на хосте. Для уменьшения нагрузки стартуйте узлы поэтапно.
+**Быстрый старт:** откройте [IMPORT-RU.md](IMPORT-RU.md) и импортируйте `MPLS-SP-Advanced-AUTO-L3VPN.unl` **как новую лабораторию**. В EVE-NG включите `Startup-configs: ON` до первого запуска. После первого старта проверьте на PE-W1 `show running-config | include hostname`.
 
-**QEMU image:** по умолчанию `vios-adventerprisek9-m.SPA.159-3.M6`; Cisco IOSv образы **не распространяются** с этой лабораторией. Если каталог отличается, измените имя образа через EVE или:
+**Ресурсы:** 16 IOSv маршрутизаторов, примерно 12.5 GB выделенной гостевой RAM плюс накладные расходы EVE-NG/гипервизора. Образ IOSv в поставку не включён; имя папки по умолчанию `vios-adventerprisek9-m.SPA.159-3.M6`. Для другого образа измените его имя с помощью `tools/rewrite_image.py` (пример в [IMPORT-RU.md](IMPORT-RU.md)).
 
-```powershell
-py tools/rewrite_image.py --image vios-НАЗВАНИЕ-ВАШЕЙ-ПАПКИ
-```
+При замене старого `.unl` уже существующие диски узлов могут сохранить предыдущую NVRAM. Поэтому **лучше создать отдельную лабораторию**. Операцию `Wipe` выполняйте только после резервного копирования изменений — она удаляет текущее сохранённое состояние устройств.
 
-Получится `MPLS-SP-Advanced-local.unl`. Сверьте с `ls -1 /opt/unetlab/addons/qemu/ | grep '^vios-'`. Для vIOS обычно требуется подготовленный `virtioa.qcow2`. Если используете иной шаблон или IOS-XR, **не подменяйте одно имя без изменения template/interface naming/config syntax**.
-
-Выполните на локальном компьютере (пример IP EVE из предыдущей конфигурации; замените, если изменился):
-
-```powershell
-scp .\MPLS-SP-Advanced.unl root@192.168.0.100:/opt/unetlab/labs/
-```
-
-На EVE:
-
-```bash
-/opt/unetlab/wrappers/unl_wrapper -a fixpermissions
-```
-
-Затем откройте в web UI лабораторию и запустите устройства. Для загрузки CLI: открыть консоль соответствующего IOSv, вставить содержимое `configs/00-underlay/<device>.cfg` целиком. **Конфиги не стартовые EVE startup-config**; они содержат команды `enable`, `configure terminal`, `end`.
-
-**Предупреждение о смене стадий:** `01-ldp` и `02-l3vpn` — *полные*, а не дифференциальные CLI файлы. Для воспроизводимого результата лучше сбросить узлы до пустого startup-config, после чего применить нужную фазу. При переходе с фазы 00/01 на 02 особенно важно убрать прежнюю глобальную конфигурацию PE–CE, поскольку IP интерфейса переносится во VRF (`ip vrf forwarding` сбрасывает IP). Система конфигурации не должна быть развернута в production.
+Три стадии независимы и имеют разные UUID лабораторий/узлов; этапы не следует накатывать поверх друг друга без очистки конфигураций.
 
 ## Чекпоинты
 
@@ -95,8 +81,8 @@ scp .\MPLS-SP-Advanced.unl root@192.168.0.100:/opt/unetlab/labs/
 ## Статическая проверка и ограничения
 
 ```bash
+python3 tools/validate_startup_configs.py
 python3 tools/validate_lab.py
-# PASS: 16 nodes, 23 links, 48 CLI configs, 8 distinct RD
 ```
 
-Проверяются XML, точные номера интерфейсов, уникальность адресов, OSPF-cost, генерируемые конфигурации, RD, RT и наличие альтернативного пути в модели. Это **не имитирует работу Cisco IOSv**, не проверяет подлинное состояние BGP/LDP или фактический обмен пакетами. До эксплуатации в лаборатории EVE-NG необходимо проверить все 16 запущенных устройств.
+Проверяется количество узлов/линков, 48 декодируемых startup-config, соответствие hostname, включённые флаги `config=1`, отсутствие CLI-команд `enable`/`configure terminal`, уникальность UUID и соответствие источникам `configs/`. Проверки не запускают IOSv, не доказывают установление BGP/LDP или передачу трафика. Подтвердите работу в EVE-NG на реальных образах.
