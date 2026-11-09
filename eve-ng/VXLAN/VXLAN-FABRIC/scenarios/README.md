@@ -1,6 +1,6 @@
 # VXLAN EVPN — практические сценарии
 
-Адаптация подхода из [DDOS](../../DDOS/scenarios/) (отдельные проверяемые сценарии, AS-path/packet-path, отказ и rollback) и [MPLS](../../MPLS/scenarios/FAULTS.md) (break/fix, VRF, control plane vs data plane).
+Адаптация подхода из [DDOS](../../../DDOS/scenarios/) (отдельные проверяемые сценарии, AS-path/packet-path, отказ и rollback) и [MPLS](../../../MPLS/scenarios/FAULTS.md) (break/fix, VRF, control plane vs data plane).
 
 **Сначала** открыть [основной README](../README.md) и [workbook](../docs/workbook.md), подготовить EVE-NG, загрузить ПОЛНЫЙ конфиг соответствующей стадии на **чистую** конфигурацию Nexus, настроить VPCS; только затем выполнить сценарий. Ниже операции — **не патчи для переключения стадий**, а локальные инъекции отказов в конкретной стадии. Смену стадии делать через сброс lab instance / чистую загрузку, не вставлять полный конфиг поверх предыдущего без очистки.
 
