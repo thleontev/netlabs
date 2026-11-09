@@ -6,9 +6,9 @@
 
 ## EVE-NG
 
-| Раздел | Лаборатория | Что изучается |
+| Раздел | Лаборатории | Что изучается |
 |---|---|---|
-| [IGP](eve-ng/IGP/README.md) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Внутренние протоколы маршрутизации (OSPF, в дальнейшем IS-IS и другие); сейчас — OSPF Multiarea |
+| [IGP](eve-ng/IGP/README.md) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Внутренние протоколы маршрутизации: OSPF; в дальнейшем — IS-IS и другие |
 | [MPLS](eve-ng/MPLS/README.md) | [MPLS Service Provider Advanced](eve-ng/MPLS/MPLS%20Service%20Provider%20Advanced/README.md) | OSPF underlay, LDP, L3VPN, MP-BGP VPNv4, Route Reflector, VRF и отказоустойчивость |
 | [VXLAN](eve-ng/VXLAN/README.md) | [VXLAN-FABRIC](eve-ng/VXLAN/VXLAN-FABRIC/README.md) | Leaf–Spine, OSPF, BGP EVPN, L2/L3 VNI, Symmetric IRB, VRF и сценарии отказов |
 | [DDoS](eve-ng/DDOS/README.md) | [CURATOR-BGP-MULTIAS](eve-ng/DDOS/CURATOR-BGP-MULTIAS/README.md) | Multi-AS BGP, два транзитных оператора, GRE, два POP защиты, резервирование и проверка путей трафика |
@@ -19,18 +19,18 @@
 
 Архив лабораторных работ и конфигураций. Не во всех каталогах есть файл проекта `.gns3`: иногда сохранены только схема и настройки устройств.
 
-| Раздел | Темы |
-|---|---|
-| [Basic](gns3/Basic/) | Базовые конфигурации, в том числе Eltex MES |
-| [EGP / BGP](gns3/EGP/) | Route Reflector cluster, BGP confederation |
-| [IGP](gns3/IGP/) | OSPF, OSPFv3, IS-IS для IPv6, FRR |
-| [MPLS](gns3/MPLS/) | MPLS core, L3VPN с OSPF/EIGRP/BGP, [Inter-AS](gns3/MPLS/Inter-AS/README.md), VPLS |
-| [VXLAN](gns3/VXLAN/) | Flood & Learn, BIDIR, EVPN и Multitenancy |
-| [VPN](gns3/VPN/) | DMVPN, IPsec IKEv1/IKEv2, site-to-site и hub-and-spoke |
-| [MLAG](gns3/MLAG/) | vPC и Rapid-PVST |
-| [STP](gns3/STP/) | MSTP |
-| [Ring](gns3/Ring/) | [ERPS на Eltex](gns3/Ring/ERPS%20%28Eltex%29/) |
-| [Diagram](gns3/Diagram/) | Сетевые схемы в draw.io |
+| Раздел | Лаборатории | Что изучается |
+|---|---|---|
+| [Basic](gns3/Basic/) | [Eltex MES basic](gns3/Basic/Eltex%20MES%20basic.txt) | Базовые настройки коммутаторов Eltex MES |
+| [EGP](gns3/EGP/) | [BGP Route Reflector](gns3/EGP/BGP%20Topology%201_1%20%28RR%20cluster%29/), [BGP Confederation](gns3/EGP/BGP%20Topology%202%20%28confederation%29/) | BGP RR cluster и confederation |
+| [IGP](gns3/IGP/) | [OSPF / OSPFv3](gns3/IGP/OSPF/), [IS-IS](gns3/IGP/ISIS/) | Внутренние протоколы маршрутизации, IPv6 и FRR |
+| [MPLS](gns3/MPLS/) | [Basic](gns3/MPLS/Basic/), [CE–PE](gns3/MPLS/CE-PEs/), [Inter-AS](gns3/MPLS/Inter-AS/README.md), [L2VPN](gns3/MPLS/L2VPN/), [L3VPN](gns3/MPLS/L3VPN/) | MPLS core, межоператорские VPN, VPLS и PE–CE OSPF/EIGRP/BGP |
+| [VXLAN](gns3/VXLAN/) | [Flood & Learn](gns3/VXLAN/VXLAN%20Topology%202%20%28F%26L%29/), [BIDIR](gns3/VXLAN/VXLAN%20Topology%202_1%20%28F%26L%20BIDIR%29/), [EVPN](gns3/VXLAN/VXLAN%20Topology%203_1%20%28EVPN%29/), [Multitenancy](gns3/VXLAN/VXLAN%20Topology%203_3%20%28Multitenancy%29/) | VXLAN Flood & Learn, EVPN и сегментация |
+| [VPN](gns3/VPN/) | [DMVPN](gns3/VPN/DMVPN/), [IPsec](gns3/VPN/IPSec/) | IKEv1/IKEv2, site-to-site, hub-and-spoke и DMVPN |
+| [MLAG](gns3/MLAG/) | [vPC](gns3/MLAG/VPC_1%20%28Rapid-PVST%29/) | Агрегация и резервирование каналов, Rapid-PVST |
+| [STP](gns3/STP/) | [MSTP](gns3/STP/MSTP_1/) | Multiple Spanning Tree Protocol |
+| [Ring](gns3/Ring/) | [ERPS (Eltex)](gns3/Ring/ERPS%20%28Eltex%29/) | Защита и восстановление Ethernet-кольца |
+| [Diagram](gns3/Diagram/) | [Сетевые схемы](gns3/Diagram/) | Диаграммы в draw.io |
 
 ## Быстрый старт
 
