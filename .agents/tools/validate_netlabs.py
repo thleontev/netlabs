@@ -182,7 +182,7 @@ def check_lab(directory: Path, report: Report) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1], help="корень репозитория")
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2], help="корень репозитория")
     parser.add_argument("--lab", type=Path, action="append", help="путь к лаборатории относительно --root; можно повторять")
     parser.add_argument("--all", action="store_true", help="проверить все лаборатории EVE-NG/GNS3")
     parser.add_argument("--strict-docs", action="store_true", help="считать предупреждения DOC ошибками")
