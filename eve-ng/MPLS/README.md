@@ -6,6 +6,14 @@
 
 **Статус:** исправлена загрузка startup-config: три новых `.unl` включают по 16 встроенных Base64-конфигураций (`config=1`, `<objects><configs>`). Оригинальная `MPLS-SP-Advanced.unl` сохранена как topology-only. Выполнена *офлайн-валидация*, **реальная загрузка IOSv в EVE-NG не проверена**. Образы IOSv не входят в репозиторий.
 
+## Топология сети
+
+[![MPLS Service Provider Advanced — топология сети: 4 PE, 4 P, 2 Route Reflector и 6 CE](docs/topology.png)](docs/topology.svg)
+
+[Топология в SVG](docs/topology.svg) · [Топология в PNG](docs/topology.png) · [Подробная схема соединений и IP-адресации (SVG)](docs/link-plan.svg) · [PNG](docs/link-plan.png)
+
+На общей схеме показаны MPLS core, пограничные PE, Route Reflector и клиентские площадки. Подробный план соединений содержит интерфейсы, IPv4-подсети и OSPF-cost; точные параметры линков также приведены в [LINKS.csv](docs/LINKS.csv).
+
 ## Файлы
 
 | Файл | Назначение |
