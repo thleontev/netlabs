@@ -1,13 +1,11 @@
 # OSPF — лаборатории EVE-NG
 
-Здесь собраны лабораторные работы по OSPF для EVE-NG. Каждая лаборатория размещается в собственной папке с файлом топологии, конфигурациями устройств и документацией.
+Здесь размещаются самостоятельные лабораторные работы по OSPF. Каждая работа находится в своей папке с файлом EVE-NG, конфигурациями, топологией и инструкциями.
 
 ## Каталог лабораторий
 
 | Лаборатория | Содержание | Комплект |
 |---|---|---|
-| [OSPF Multiarea (topology 1)](OSPF%20Multiarea%20%28topology%201%29/README.md) | Многообластной OSPF: area 0/51/100/200/300, ABR, virtual link, stub, NSSA, аутентификация, OSPF ↔ EIGRP; IOSv и IOS XRv | 14 узлов, 15 сетевых сегментов, встроенные startup-config; запуск в EVE-NG не проверен |
+| [OSPF Multiarea (topology 1)](OSPF%20Multiarea%20%28topology%201%29/README.md) | OSPF area 0/51/100/200/300, ABR, virtual link, stub, NSSA, OSPF ↔ EIGRP, аутентификация | 14 узлов, 15 сетевых сегментов; 14 встроенных startup-config; запуск в EVE-NG не проверялся |
 
-**Быстрый старт:** [инструкция и проверки](OSPF%20Multiarea%20%28topology%201%29/README.md#быстрый-старт) · [файл EVE-NG](OSPF%20Multiarea%20%28topology%201%29/ospf_multiarea.unl) · [схема топологии](OSPF%20Multiarea%20%28topology%201%29/Topology.png).
-
-Лаборатория и конфигурации сохранены в исходном виде; документация описывает существующие файлы, а не новую версию стенда.
+**Быстрый старт:** [инструкция импорта](OSPF%20Multiarea%20%28topology%201%29/IMPORT-RU.md) · [готовая лаборатория EVE-NG](OSPF%20Multiarea%20%28topology%201%29/ospf_multiarea.unl) · [схема сети](OSPF%20Multiarea%20%28topology%201%29/docs/topology.png).
