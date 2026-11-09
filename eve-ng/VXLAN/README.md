@@ -1,35 +1,32 @@
 # VXLAN — лаборатории EVE-NG
 
-Каталог предназначен для **нескольких независимых лабораторий по VXLAN**. Каждый проект размещается в собственной папке вместе с `.unl`, конфигурациями, схемами, сценариями и документацией.
+Коллекция независимых лабораторий VXLAN для EVE-NG Community Edition. Каждая лаборатория находится в собственной папке с топологией, конфигурациями, практическими сценариями и документацией.
 
-## Лаборатории
+## [VXLAN-FABRIC](VXLAN-FABRIC/README.md)
 
-### [VXLAN-FABRIC](VXLAN-FABRIC/README.md)
+Учебная **Leaf–Spine VXLAN EVPN fabric**: 2 Spine (BGP EVPN Route Reflector), 3 Leaf (VTEP) и 6 VPCS. В лаборатории изучаются OSPF underlay, EVPN L2, BUM/ingress replication, Anycast Gateway, Symmetric IRB, L3VNI, Multitenancy и отказоустойчивость.
 
-Leaf–Spine fabric на Cisco Nexus 9000v: **2 Spine, 3 Leaf, 6 VPCS**, OSPF underlay, BGP EVPN L2, Symmetric IRB, L3VNI, Multi-VRF, firewall, диагностика и 13 практических break/fix сценариев.
+### Топология
 
-- [Основная лаборатория EVPN L2](VXLAN-FABRIC/VXLAN-FABRIC-5N-6H.unl)
-- [Multitenancy без firewall](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-NOFW.unl)
-- [Multitenancy с IOSv ACL-router](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl)
-- [Multitenancy с Linux firewall](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-FW.unl)
-- [Конфигурации по стадиям](VXLAN-FABRIC/configs/) · [Практические сценарии](VXLAN-FABRIC/scenarios/README.md) · [Диагностика](VXLAN-FABRIC/docs/SCENARIO-DIAGNOSTICS.md)
+![VXLAN EVPN Leaf–Spine: 2 Spine, 3 Leaf, 6 VPCS](VXLAN-FABRIC/vxlan-fabric-topology.png)
 
-Встроенные startup-config предусмотрены в указанных `.unl` (их применение зависит от версии EVE-NG и QEMU-образа). Для варианта с Linux firewall требуется подготовленный Linux-образ; IOSv ACL-router **не является stateful firewall**. Проверку фактического запуска на конкретном сервере EVE-NG выполнять отдельно.
+[Открыть SVG](VXLAN-FABRIC/vxlan-fabric-topology.svg) · [Вариант с firewall (PNG)](VXLAN-FABRIC/vxlan-multitenant-fw-topology.png) · [SVG с firewall](VXLAN-FABRIC/vxlan-multitenant-fw-topology.svg)
 
-## Структура
+### Варианты лаборатории
 
-```text
-eve-ng/
-└── VXLAN/
-    ├── README.md                 # каталог лабораторий
-    └── VXLAN-FABRIC/             # одна независимая лаборатория
-        ├── README.md
-        ├── *.unl
-        ├── configs/
-        ├── scenarios/
-        ├── docs/
-        ├── topology.json
-        └── *.svg, *.png
-```
+| Топология EVE-NG | Назначение |
+|---|---|
+| [VXLAN-FABRIC-5N-6H.unl](VXLAN-FABRIC/VXLAN-FABRIC-5N-6H.unl) | Базовая фабрика с EVPN L2 |
+| [VXLAN-FABRIC-MULTITENANT-NOFW.unl](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-NOFW.unl) | Две VRF без межсетевого экрана |
+| [VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl) | Меж-VRF маршрутизация через IOSv с ACL |
+| [VXLAN-FABRIC-MULTITENANT-FW.unl](VXLAN-FABRIC/VXLAN-FABRIC-MULTITENANT-FW.unl) | Меж-VRF маршрутизация через Linux firewall |
 
-Следующие VXLAN-лаборатории размещать **рядом с VXLAN-FABRIC**, не смешивая их файлы и сценарии. Существующие материалы были перенесены без перегенерации схем и `.unl`.
+### Материалы
+
+- [Конфигурации 00–03](VXLAN-FABRIC/configs/) — OSPF, EVPN L2, Symmetric IRB, Multitenancy.
+- [Практикум](VXLAN-FABRIC/docs/workbook.md) и [13 сценариев диагностики](VXLAN-FABRIC/scenarios/README.md) — отказ линка, RR, VTEP, RT/VNI, Type-5, firewall и MTU.
+- [Диагностическая карта](VXLAN-FABRIC/docs/SCENARIO-DIAGNOSTICS.md) и [инструкция по импорту](VXLAN-FABRIC/docs/STARTUP-CONFIG-REPAIR.md).
+
+**Важно:** для NX-OS нужны соответствующие QEMU-образы. В `.unl` предусмотрены встроенные startup-config, но их применение и фактическая работа зависят от версии EVE-NG CE и образов. Linux-вариант требует отдельного образа, а IOSv с ACL — не stateful firewall.
+
+Другие VXLAN-лаборатории размещаются отдельными папками рядом с `VXLAN-FABRIC/`.
