@@ -1,83 +1,35 @@
-## Исправление импорта и вариант без Linux-образа (2026-11-09)
+# VXLAN-FABRIC — Leaf–Spine EVPN для EVE-NG CE
 
-В исходных `.unl` не было встроенных startup-config; в обновлённых файлах используется `<objects><configs>` (base64) и `config="1"`. Подробная инструкция: [STARTUP-CONFIG-REPAIR.md](docs/STARTUP-CONFIG-REPAIR.md).
+Лабораторная IP-fabric на **2 Spine, 3 Leaf (VTEP) и 6 VPCS**. Поддерживает OSPF underlay, BGP EVPN overlay, L2 VNI, Symmetric IRB, L3 VNI и изоляцию VRF. Для межсегментного доступа предусмотрены варианты с маршрутизатором IOSv/ACL и Linux firewall.
 
-- `VXLAN-FABRIC-5N-6H.unl` — embedded EVPN L2 configs.
-- `VXLAN-FABRIC-MULTITENANT-NOFW.unl` — multi-VRF без Linux firewall (подходит для проверки Fabric/VRF, **не** даёт меж-VRF транзит).
-- `VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl` — multi-VRF с Cisco IOSv ACL router вместо Linux firewall, конфигурация встроена, **не stateful**. Требуется установленный образ IOSv.
-- `VXLAN-FABRIC-MULTITENANT-FW.unl` — исходный сценарий c Debian/nftables; требует установленного QEMU образа `linux-vxlan-debian12` и ручной настройки Linux.
+![VXLAN EVPN Leaf–Spine](vxlan-fabric-topology.png)
 
-Отказ открытия лаборатории без текста ошибки EVE-NG не диагностирован. Наличие отсутствующего образа — возможная проблема, но не подтверждённая причина отказа UI.
+[Схема SVG](vxlan-fabric-topology.svg) · [Схема с firewall (PNG)](vxlan-multitenant-fw-topology.png) · [SVG с firewall](vxlan-multitenant-fw-topology.svg)
 
-# VXLAN EVPN Leaf–Spine — повторение старых лабораторий в EVE-NG CE
+## Файлы лаборатории
 
-**Версия пакета:** 2026-10-26 · **платформа:** Cisco Nexus 9000v (ориентир 9.3.9) · **статус:** артефакты сгенерированы и статически проверены, **запуск в EVE-NG и проверка CLI на реальных образах не производились**.
+| Файл | Состав и назначение |
+|---|---|
+| [`VXLAN-FABRIC-5N-6H.unl`](VXLAN-FABRIC-5N-6H.unl) | 5 Nexus + 6 VPCS, готовая стадия **01 EVPN L2** |
+| [`VXLAN-FABRIC-MULTITENANT-NOFW.unl`](VXLAN-FABRIC-MULTITENANT-NOFW.unl) | 5 Nexus + 6 VPCS, две VRF без внешнего маршрутизатора; inter-VRF передача не реализована |
+| [`VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl`](VXLAN-FABRIC-MULTITENANT-IOSV-FW.unl) | 5 Nexus + 6 VPCS + IOSv, меж-VRF маршрутизация через ACL; **не stateful firewall** |
+| [`VXLAN-FABRIC-MULTITENANT-FW.unl`](VXLAN-FABRIC-MULTITENANT-FW.unl) | 5 Nexus + 6 VPCS + Debian Linux firewall, настройка Linux отдельно |
+| [`configs/`](configs/) | Полные конфигурации Nexus для стадий 00–03, команды VPCS |
+| [`scenarios/`](scenarios/README.md) | 13 сценариев baseline и break/fix |
+| [`docs/workbook.md`](docs/workbook.md) | Учебные задания и критерии проверки |
+| [`docs/SCENARIO-DIAGNOSTICS.md`](docs/SCENARIO-DIAGNOSTICS.md) | Диагностика control plane, data plane и VRF |
 
-Это продвинутая замена предыдущей лаборатории с двумя VTEP. Основана на архитектуре `https://github.com/thleontev/netlabs/tree/main/gns3/VXLAN`, содержит 5 коммутаторов, 6 VPCS, 2 независимых spine, 3 leaf. Мультитенантный вариант добавляет Debian firewall.
+В перечисленные `.unl` встроены startup-config для пяти Nexus и шести VPCS. Для Linux firewall автоматическая конфигурация отсутствует. В каталоге нет отдельных `.unl` для стадий 00 и 02 — для них используйте чистый стенд и файлы из `configs/`.
 
-## Что было раньше
+## Архитектура
 
-| Старый проект | Фактическое содержимое | Как отражено здесь |
-|---|---|---|
-| VXLAN Topology 2 (F&L) | 2 Spine + 3 Leaf; OSPF; PIM-SM; VNI 10010/10020/10030, группы 224.1.1.10/20/30; NX-OS Titanium 7.3 | Отдельная сравнительная работа в `docs/legacy-multicast.md`, без включения PIM в основной сценарий |
-| VXLAN Topology 2_1 (F&L BIDIR) | Аналогичный underlay, PIM BIDIR с `ip pim rp-address ... bidir` | Разбор условий поддержки RP и диагностики |
-| VXLAN Topology 3_1 (EVPN) | Nexus 9.3.1, BGP RR на Spine, EVPN, anycast gateway, tenant L3VNI | Стадии 01 и 02 |
-| VXLAN Topology 3_3 (Multitenancy) | Отдельные VRF Clients, Web-Servers, DMZ, L3VNI; ASAv между VRF | Стадия 03: два VRF + Linux nftables firewall вместо лицензируемой ASAv |
+**Underlay:** шесть маршрутизируемых линков Leaf ↔ Spine, OSPF area 0, Loopback0 для Router-ID/BGP и Loopback1 для VTEP. Каждый Leaf соединён с обоими Spine; физического Leaf ↔ Leaf соединения нет.
 
-**Принцип обновления:** старая multicast BUM-модель полезна для понимания VXLAN F&L. В новом основном сценарии L2 VNI используют `ingress-replication protocol bgp`: BGP EVPN рассылает список VTEP, так что PIM underlay не нужен. В обоих случаях overlay VXLAN несёт UDP/4789.
+**Overlay:** Spine — Route Reflector для BGP L2VPN EVPN, а Leaf — VTEP. VXLAN data plane использует UDP/4789. Для BUM-трафика используется BGP ingress replication без необходимости PIM в underlay.
 
-## Требования и возможные ограничения
+### Адреса Loopback
 
-- EVE-NG Community Edition с рабочим KVM/nested virtualization; 5 Nexus 9000v требуют около **40 GiB RAM только на сами гостевые узлы** (по 8 GiB), рекомендован хост с **64 GiB+**, достаточными физическими CPU-ядрами и диском.
-- Легально полученный образ Cisco Nexus 9300v NX-OS 9.3.9. Готовый образ не вложен. EVE имя образа по умолчанию `nxosv9k-9300v-9.3.9`; в каталоге обычно должен лежать `sataa.qcow2` (проверить официальную HowTo под свою версию EVE).
-- В EVE-NG есть VPCS по умолчанию; он используется для шести конечных хостов. Для второй .unl нужен дополнительно Debian QEMU образ `linux-vxlan-debian12` (или замена через скрипт).
-- Настройки `ethernet`, `ram`, `template`, отображение `mgmt0/Ethernet1/x`, а также поддержка отдельных команд зависят от конкретного образа NX-OS и EVE. Проверить в консоли перед вводом. **Не считать .unl гарантированно запускаемым на иной версии без теста.**
-- Ни один стенд не подключен к продуктивной домашней/серверной сети; управление/Cloud не добавлены в .unl во избежание случайного bridging.
-
-Официальная инструкция EVE: https://www.eve-ng.net/index.php/documentation/howtos/howto-add-cisco-nexus-9000v-switch/ . Справочник Cisco для EVPN 9.3: https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus9000/sw/93x/vxlan/configuration/guide/b-cisco-nexus-9000-series-nx-os-vxlan-configuration-guide-93x/b-cisco-nexus-9000-series-nx-os-vxlan-configuration-guide-93x_chapter_0101.html .
-
-## Файлы
-
-```
-VXLAN-FABRIC-5N-6H.unl                 # Основная топология, 5 Nexus + 6 VPCS
-VXLAN-FABRIC-MULTITENANT-FW.unl       # Топология + Debian firewall
-configs/00-underlay/{SPINE,LEAF}*.cfg
-configs/01-evpn-l2/{SPINE,LEAF}*.cfg
-configs/02-symmetric-irb/{SPINE,LEAF}*.cfg
-configs/03-multitenancy-fw/{SPINE,LEAF}*.cfg
-configs/0{1,2,3}-*/VPCS-commands.txt
-scripts/fw-setup.sh                   # Linux FW: маршрутизация + nftables
-scripts/retarget_image.py             # Подмена имен QEMU образов в UNL
-scripts/check_artifacts.py            # Статические тесты, НЕ runtime verification
-docs/workbook.md                      # 4 этапа + гипотезы/критерии/проверки
-docs/legacy-multicast.md             # Почему PIM-SM/BIDIR отличаются от BGP IR
-```
-
-## Схема L3 underlay и L2 access
-
-```
-                SPINE-01 (RR)              SPINE-02 (RR)
-                 10.255.0.11               10.255.0.12
-                 /     |   \               /   |     \
-                /      |    \             /    |      \
-               /       |     \           /     |       \
-           LEAF-01   LEAF-02   LEAF-03  (каждый LEAF к обоим SPINE)
-          .21 / VTEP .21  .22 / VTEP .22  .23 / VTEP .23
-         CLIENT-A/APP-A   CLIENT-B/DB-B    APP-C/DB-C
-```
-
-Шесть *разных* bridge-network на L3 линках, шесть *разных* L2-access сетей. Никаких физических соединений leaf-to-leaf: взаимосвязь только через IP underlay, UDP/4789 и EVPN.
-
-| Link | Leaf port | Leaf IP | Spine port | Spine IP |
-|---|---|---|---|---|
-| LEAF-01 ↔ SPINE-01 | E1/1 | 10.0.11.0/31 | E1/1 | 10.0.11.1/31 |
-| LEAF-02 ↔ SPINE-01 | E1/1 | 10.0.12.0/31 | E1/2 | 10.0.12.1/31 |
-| LEAF-03 ↔ SPINE-01 | E1/1 | 10.0.13.0/31 | E1/3 | 10.0.13.1/31 |
-| LEAF-01 ↔ SPINE-02 | E1/2 | 10.0.21.0/31 | E1/1 | 10.0.21.1/31 |
-| LEAF-02 ↔ SPINE-02 | E1/2 | 10.0.22.0/31 | E1/2 | 10.0.22.1/31 |
-| LEAF-03 ↔ SPINE-02 | E1/2 | 10.0.23.0/31 | E1/3 | 10.0.23.1/31 |
-
-| Node | Router ID / Lo0 | VTEP Lo1 |
+| Устройство | Lo0 — BGP / Router-ID | Lo1 — VXLAN VTEP |
 |---|---|---|
 | SPINE-01 | 10.255.0.11/32 | — |
 | SPINE-02 | 10.255.0.12/32 | — |
@@ -85,82 +37,124 @@ docs/legacy-multicast.md             # Почему PIM-SM/BIDIR отличаю�
 | LEAF-02 | 10.255.0.22/32 | 10.254.0.22/32 |
 | LEAF-03 | 10.255.0.23/32 | 10.254.0.23/32 |
 
-| Host | Leaf access interface | VLAN/L2VNI | Address | Gateway stages 02–03 |
-|---|---|---|---|---|
-| CLIENT-A | LEAF-01 E1/3 | VLAN10 / 10010 | 192.168.10.11/24 | 192.168.10.1 |
-| CLIENT-B | LEAF-02 E1/3 | VLAN10 / 10010 | 192.168.10.12/24 | 192.168.10.1 |
-| APP-A | LEAF-01 E1/4 | VLAN20 / 10020 | 192.168.20.11/24 | 192.168.20.1 |
-| APP-C | LEAF-03 E1/3 | VLAN20 / 10020 | 192.168.20.13/24 | 192.168.20.1 |
-| DB-B | LEAF-02 E1/4 | VLAN30 / 10030 | 192.168.30.12/24 | 192.168.30.1 |
-| DB-C | LEAF-03 E1/4 | VLAN30 / 10030 | 192.168.30.13/24 | 192.168.30.1 |
+### Физические L3-линии
 
-> L2VNI: 10010 / 10020 / 10030. Stage02: VRF TENANT1 / L3VNI 50001. На Leaf создаются только VLAN с локально подключёнными хостами: L1=10,20; L2=10,30; L3=20,30 (так гарантируется проверка L3VNI при трафике CLIENT-A→DB-C). Stage03: CLIENTS / L3VNI 50110, APPS / L3VNI 50220. `VLAN110` и `VLAN220` — локальные VLAN для L3VNI, не access VLAN. Underlay AS: 65000.
-
-## EVE-NG Community Edition — импорт
-
-1. Убедиться, что образ присутствует: `ls /opt/unetlab/addons/qemu/ | grep nxosv9k`.
-2. Если имя отличается, на своём компьютере выполнить `python3 scripts/retarget_image.py VXLAN-FABRIC-5N-6H.unl --nxos <real-eve-folder-name>`. Для FW топологии дополнительно `--linux <image-folder>`.
-3. Передать `.unl` на стенд (ранее использованный адрес сервера: `192.168.0.100`, проверить, что он всё ещё актуален):
-
-   ```powershell
-   scp .\VXLAN-FABRIC-5N-6H.unl root@192.168.0.100:/opt/unetlab/labs/
-   ```
-
-4. На EVE выполнить `/opt/unetlab/wrappers/unl_wrapper -a fixpermissions`.
-5. Открыть лабораторию в веб-интерфейсе, проверить, что каждый NX-OS port `Ethernet1/x` соответствует схеме, при необходимости поправить номера линков. Если EVE запрашивает создание/замену образов, это надо сделать до запуска.
-6. Запустить SPINE-01/02 и LEAF-01/02/03. После первого запуска пройти мастер начальной конфигурации NX-OS и сохранить пароль. **Конфигурации не применяются автоматически в EVE CE**: на каждой ноде выполнить `configure terminal`, затем вставить содержимое соответствующего CFG (строки, начинающиеся `!`, можно оставлять). `copy run start` сохранить после проверки.
-7. Для перехода к следующему этапу рекомендуется **сначала откатить узлы к исходному состоянию / очистить lab instance**, а затем применять полный файл нового этапа. Если требуется не терять running-config, самостоятельно применить diff конфигураций и удалить устаревшие VRF/VNI — простое копирование полного конфига поверх старого может оставить лишние элементы. Backup конфигурации обязателен.
-8. В VPCS отдельно применить команды `configs/<stage>/VPCS-commands.txt`, поскольку хосты не получают IP из .unl.
-
-**Проверка сетевых портов** на NX-OS: `show interface brief`, `show interface status`, `show ip interface brief`. С учётом платформы `mgmt0` может занимать отдельную EVE-NG NIC, а E1/1 — следующий порт. Если отображаемые в редакторе EVE номера отличаются, скорректировать подключения, а не IP-план вслепую.
-
-## Этапы
-
-| Stage | Цель | Включено в cfg | Проверка |
+| Leaf | Порт Leaf / IP | Spine | Порт Spine / IP |
 |---|---|---|---|
-| **00** Underlay | OSPF, /31 линк, /32 Lo, ECMP, отказ spine | `configs/00-underlay` | 2 OSPF соседства у leaf / 3 у spine, все VTEP lo достижимы |
-| **01** VXLAN EVPN L2 | VLAN/VNI; EVPN route types 2,3; BUM ingress replication | `configs/01-evpn-l2` | CLIENT-A ↔ CLIENT-B, APP-A ↔ APP-C, DB-B ↔ DB-C проходят; разные VLAN не маршрутизируются |
-| **02** Symmetric IRB | VRF TENANT1; L3VNI 50001; Anycast GW | `configs/02-symmetric-irb` | CLIENT-A ↔ DB-C через L3VNI, поскольку у LEAF-01 нет VLAN30 |
-| **03** Multitenancy / FW | VRF CLIENTS+APPS; два L3VNI, отдельная зона фаервола | `configs/03-multitenancy-fw` + Linux script | внутри VRF пинг; между VRF политики FW решают доступ |
+| LEAF-01 | E1/1 — 10.0.11.0/31 | SPINE-01 | E1/1 — 10.0.11.1/31 |
+| LEAF-02 | E1/1 — 10.0.12.0/31 | SPINE-01 | E1/2 — 10.0.12.1/31 |
+| LEAF-03 | E1/1 — 10.0.13.0/31 | SPINE-01 | E1/3 — 10.0.13.1/31 |
+| LEAF-01 | E1/2 — 10.0.21.0/31 | SPINE-02 | E1/1 — 10.0.21.1/31 |
+| LEAF-02 | E1/2 — 10.0.22.0/31 | SPINE-02 | E1/2 — 10.0.22.1/31 |
+| LEAF-03 | E1/2 — 10.0.23.0/31 | SPINE-02 | E1/3 — 10.0.23.1/31 |
 
-## Важная последовательность проверки
+### Хосты, VLAN и VNI
 
-1. OSPF: `show ip ospf neighbors`, `show ip route 10.254.0.22`, `ping 10.254.0.23 source 10.254.0.21` (соответствующий Leaf).
-2. BGP: `show bgp l2vpn evpn summary` — оба Spine как RR должны быть Established.
-3. Overlay: `show nve peers`, `show nve vni`, `show bgp l2vpn evpn`, `show l2route evpn mac all`.
-4. После ping из VPCS: Type-2 для MAC/IP, Type-3 IMET для BUM, Type-5 для сети клиента при включённом `advertise l2vpn evpn` + redistribution (могут зависеть от версии NX-OS).
-5. L3: `show ip route vrf TENANT1`, `show nve vrf`, `show forwarding ipv4 route vrf TENANT1` (синтаксис последнего зависит от версии), `show ip arp vrf TENANT1`.
-6. Failover: в EVE вручную остановить SPINE-01, убедиться, что OSPF и BGP переключаются, а hosts получают связь через SPINE-02. После восстановления проверить снова.
+| VPCS | Подключение | VLAN / L2 VNI | IPv4 | Шлюз (стадии 02–03) |
+|---|---|---|---|---|
+| CLIENT-A | LEAF-01 E1/3 | 10 / 10010 | 192.168.10.11/24 | 192.168.10.1 |
+| CLIENT-B | LEAF-02 E1/3 | 10 / 10010 | 192.168.10.12/24 | 192.168.10.1 |
+| APP-A | LEAF-01 E1/4 | 20 / 10020 | 192.168.20.11/24 | 192.168.20.1 |
+| APP-C | LEAF-03 E1/3 | 20 / 10020 | 192.168.20.13/24 | 192.168.20.1 |
+| DB-B | LEAF-02 E1/4 | 30 / 10030 | 192.168.30.12/24 | 192.168.30.1 |
+| DB-C | LEAF-03 E1/4 | 30 / 10030 | 192.168.30.13/24 | 192.168.30.1 |
 
-Выполнение предыдущего шага обязательно до следующего. В `docs/workbook.md` есть учебные вопросы и шаги отказных сценариев.
+В стадии 02 используется VRF `TENANT1` с **L3 VNI 50001**. В стадии 03 — отдельные VRF **CLIENTS / L3 VNI 50110** и **APPS / L3 VNI 50220**. На Leaf создаются только те access VLAN, которые нужны его локальным хостам. Благодаря этому проверка CLIENT-A → DB-C в стадии 02 использует маршрутизацию через L3VNI, а не локальный L2 bridging.
 
-## Переход 03: firewall
+## Этапы практикума
 
-FW подключён **только к LEAF-02**, отдельными routed интерфейсами в VRF CLIENTS и VRF APPS. В `.unl` Debian использует `interface id=1` и `id=2`; названия гостевых интерфейсов Debian могут быть `ens4`/`ens5` вместо `eth1`/`eth2`. Параметризовать так:
+| Стадия | Конфигурация | Проверка |
+|---|---|---|
+| **00 Underlay** | [`configs/00-underlay/`](configs/00-underlay/) | OSPF adjacency, маршрут к Lo1 всех VTEP, ECMP и отказ одного uplink |
+| **01 EVPN L2** | [`configs/01-evpn-l2/`](configs/01-evpn-l2/) | BGP RR, EVPN Type-2/3, L2-связь между хостами одного VLAN |
+| **02 Symmetric IRB** | [`configs/02-symmetric-irb/`](configs/02-symmetric-irb/) | Anycast Gateway, L3 VNI, меж-VLAN маршрутизация |
+| **03 Multitenancy** | [`configs/03-multitenancy-fw/`](configs/03-multitenancy-fw/) | VRF CLIENTS/APPS, Type-5, меж-VRF доступ через внешний маршрутизатор/экран |
+
+Этапы независимы: конфигурации — **полные**, а не diff. Перед переключением стадии сохраните данные и используйте чистый экземпляр стенда. Не накладывайте полную конфигурацию поверх другой без удаления устаревших VRF, VNI и BGP-секций.
+
+## Требования и установка
+
+- EVE-NG **Community Edition**, работающий KVM/nested virtualization.
+- Cisco Nexus 9000v: в `.unl` задан `nxosv9k-9300v-9.3.9`; для IOSv-варианта также нужен `vios-adventerprisek9-m.SPA.159-3.M6`. Названия каталогов должны совпадать с реальными QEMU-образами на сервере.
+- Для варианта с Linux FW нужен отдельный подготовленный образ `linux-vxlan-debian12`; без него выбирайте `MULTITENANT-NOFW` или `MULTITENANT-IOSV-FW`.
+- Пять Nexus требуют ориентировочно **40 GiB гостевой RAM** (по 8 GiB); хосту понадобится дополнительная память для EVE-NG, других VM и гипервизора.
+
+Проверить образы на сервере EVE-NG:
 
 ```bash
-sudo CLIENT_IF=ens4 APPS_IF=ens5 bash scripts/fw-setup.sh
+ls -1 /opt/unetlab/addons/qemu/ | grep -E '^(nxosv9k|vios|linux)-'
 ```
 
-Заменить на реально найденные `ip -br link` интерфейсы. Linux firewall по умолчанию разрешает **только ICMP от CLIENTS к APPS** и установленный ответный трафик; прочие новые межзонные соединения запрещает. Это нужно для безопасного учебного теста, **не конфигурация production firewall**. На LEAF-02 статики в соответствующих VRF имеют `tag 101`, на маршруты применяется BGP route-map `RM_FIREWALL`. Диагностика: `show ip route vrf CLIENTS`, `show ip route vrf APPS`, `show bgp l2vpn evpn`, `nft list ruleset`, `tcpdump`.
+Если название папки образа отличается, исправьте соответствующий атрибут `image` в `.unl` до копирования. Не переименовывайте `template` произвольно.
 
-## Критерии готовности
+Передать выбранную лабораторию на сервер (пример адреса из конфигурации стенда):
 
-- Можешь объяснить, зачем нужны Lo0 (BGP update-source / router-id) и Lo1 (VTEP), зачем Spine RR и почему Spine **не** VTEP.
-- Можешь по `show bgp l2vpn evpn` найти Type-2/3/5 и определить, у какого VTEP находится хост.
-- Можешь за 10 минут локализовать отказ подмножества hosts между underlay, BGP, RT/VNI, шлюзом и FW.
-- Можешь объяснить, почему без firewall VRF CLIENTS и VRF APPS изолированы и почему объединять их прямым RT-import нельзя, если нужна централизованная инспекция.
-- Можешь сравнить multicast Flood & Learn старой лаборатории и ingress replication/EVPN.
+```powershell
+scp .\VXLAN-FABRIC-5N-6H.unl root@192.168.0.100:/opt/unetlab/labs/
+```
 
-## Границы проверок
+На EVE-NG:
 
-Скрипт `scripts/check_artifacts.py` проверяет XML, отсутствие конфликтов interface/network id, наличие 6 underlay и 6 access связей, обязательные BGP/OSPF/VNI/VRF секции и непротиворечивость IP-плана. Он **не** может обнаружить недоступные NX-OSv команды, несовместимый image, проблемы boot/KVM или runtime reachability. Тесты выполнены локально, но работу конкретного EVE-хоста надо проверить вручную.
+```bash
+/opt/unetlab/wrappers/unl_wrapper -a fixpermissions
+```
 
-## Дополнительные практические сценарии (break/fix)
+Откройте лабораторию через Web UI и проверьте соответствие `Ethernet1/x` и соединений топологии: у Nexus `mgmt0` может занимать отдельную виртуальную NIC.
 
-В отличие от четырёх последовательных стадий `configs/`, сценарии — это **независимые fault-injection упражнения** на уже запущенной соответствующей стадии. Формат воспроизводит подход из [DDOS](../../DDOS/scenarios/) и [MPLS](../../MPLS/scenarios/FAULTS.md): исходная проверка → ввод одной неисправности → control-plane/data-plane evidence → точный rollback.
+**Startup-config:** в существующих `.unl` находятся base64-конфигурации в `<objects><configs>` и флаг `config="1"` для Nexus/VPCS. Их фактическое применение зависит от версии EVE и образа. Для уже запускавшихся узлов может потребоваться **Wipe** (удаляет состояние узла: заранее сохраните важные настройки). Если автозагрузка не сработала, вставьте соответствующий файл из `configs/<стадия>/` вручную и сохраните конфигурацию. Дополнительные сведения: [загрузка и troubleshooting](docs/STARTUP-CONFIG-REPAIR.md).
 
-- [Каталог 13 сценариев](scenarios/README.md) — от baseline/ECMP до VTEP blackhole, RT, Type-5, межсетевого экрана и PMTUD.
-- [Диагностическая карта](docs/SCENARIO-DIAGNOSTICS.md) — разделение отказов по уровням, команды и шаблон отчёта.
+**Firewall:** внешний маршрутизатор подключается к LEAF-02 через два routed интерфейса: CLIENTS `172.31.10.1/30 ↔ 172.31.10.2/30` и APPS `172.31.20.1/30 ↔ 172.31.20.2/30`. Для IOSv применяются маршруты и ACL из встроенного startup-config; это **не stateful inspection**. Linux-вариант требует ручной IP-настройки, маршрутов, `ip_forward`, политики nftables и проверки реальных имён интерфейсов командой `ip -br link`. Готового `scripts/fw-setup.sh` в текущем GitHub каталоге **нет**.
 
-Эти материалы **не добавляют новых устройств** в `.unl`; сценарий MTU требует заменить часть VPCS на Linux при тестировании DF. Сценарии подготовлены по CLI существующих конфигураций, **фактический запуск в EVE-NG/на Nexus 9000v не подтверждён**.
+## Проверка сети
+
+**1. Underlay на LEAF-01:**
+
+```text
+show ip ospf neighbors
+show ip route 10.254.0.23
+ping 10.254.0.23 source 10.254.0.21
+```
+
+В норме у LEAF-01 два OSPF-соседа, а удалённый VTEP доступен через underlay.
+
+**2. BGP EVPN и VXLAN в стадии 01+:**
+
+```text
+show bgp l2vpn evpn summary
+show bgp l2vpn evpn
+show nve peers
+show nve vni
+show l2route evpn mac all
+```
+
+Проверка VPCS: `CLIENT-A → 192.168.10.12`, `APP-A → 192.168.20.13`, `DB-B → 192.168.30.13`. Между разными VLAN в стадии 01 маршрутизация отсутствует. Для анализа BUM зафиксировать ARP и EVPN Type-3; при обмене трафиком искать внешние VXLAN UDP/4789 на uplink.
+
+**3. Symmetric IRB в стадии 02:**
+
+```text
+show ip route vrf TENANT1
+show nve vrf
+show ip arp vrf TENANT1
+show bgp l2vpn evpn
+```
+
+Проверить `CLIENT-A → DB-C 192.168.30.13`. Для сети VLAN30 на LEAF-01 нет локального SVI, поэтому нужен удалённый путь через L3VNI. Фактическое присутствие Type-5 проверить на своём образе.
+
+**4. Multitenancy в стадии 03:**
+
+```text
+show ip route vrf CLIENTS
+show ip route vrf APPS
+show bgp l2vpn evpn
+```
+
+Внутри VRF трафик должен работать; inter-VRF связанность проверяется только в варианте с внешним маршрутизатором/экраном и с правильным обратным маршрутом. Для IOSv используйте `show access-lists`; для Linux — `ip route`, `sysctl net.ipv4.ip_forward`, `nft list ruleset`, `tcpdump`.
+
+## Практические сценарии и справка
+
+- [13 сценариев baseline/break-fix](scenarios/README.md) — uplink, OSPF/ECMP, RR, Lo1/VTEP, RT, ingress replication, Anycast SVI, Type-5, firewall, route leaking и MTU/PMTUD.
+- [Учебный workbook](docs/workbook.md) — задания и критерии готовности.
+- [Карта диагностики](docs/SCENARIO-DIAGNOSTICS.md) — порядок поиска неисправности по уровням.
+- [Сравнение multicast Flood & Learn и EVPN ingress replication](docs/legacy-multicast.md) — PIM-SM/BIDIR изучаются отдельно и не входят в основные `.unl`.
+
+**Статус:** топологии и конфигурации проверялись статически. Загрузка на конкретном EVE-NG CE и синтаксис NX-OSv на реальном образе не подтверждены. После импорта сравните работу устройств с ожидаемыми контрольными точками.
