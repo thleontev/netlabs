@@ -1,14 +1,24 @@
-# 04 — Asymmetric return path, PBR exercise
+# 04 — Асимметричная маршрутизация ответов и PBR
 
-The baseline CE receives default routes from both GRE POPs and from two ISPs. `local-preference` intentionally selects CUR1 as its primary return path. Traffic from T2 clients enters POP2 by default, therefore outbound return *can be asymmetric*. This is intentional so you can detect it.
+**Цель:** определить, через какой GRE-туннель сервер отправляет ответы, и проверить возможность управления обратным путём с помощью PBR.
 
-Packet capture ingress from BOT1 → CUR2/GRE2 and return from SERVER → CE → GRE1/CUR1. If that happens, prove it with traceroute/capture and inspect potential stateful filtering issues.
+## Исходные условия
 
-## Optional: destination-specific PBR on the server-facing CE interface
+`R-CE` получает маршруты по умолчанию от обоих POP через GRE и от двух ISP. Политика `local-preference` специально отдаёт приоритет обратному пути через CUR1. Запросы от сетей за `R-T2` обычно входят через CUR2, поэтому путь ответа **может быть асимметричным**.
 
-**Try only after baseline is working**, because some IOSv images differ in PBR support. Ingress on Gi0/2 is from SERVER (not from the Internet!).
+## Задание 1. Зафиксировать асимметрию
 
-```ios
+1. Снимите пакеты на входе `CUR2/GRE2` и на выходе `R-CE` к `GRE1/CUR1`.
+2. Сопоставьте входящие и ответные пакеты по IP-адресам, времени и типу трафика.
+3. Подтвердите обратный маршрут трассировкой и захватом пакетов. Объясните, какие проблемы асимметрия может создавать для межсетевых экранов с отслеживанием состояния соединений.
+
+**Примечание:** в базовой конфигурации ACL блокирует часть трафика `BOT1/BOT2`, поэтому ответного пакета для такого запроса может не быть. Для наблюдения обратного пути используйте разрешённый тестовый поток либо временно скорректируйте ACL в пределах лаборатории.
+
+## Задание 2. Настроить PBR по сети назначения (дополнительно)
+
+Выполняйте задание **только после успешной проверки исходного состояния**: поддержка PBR зависит от образа IOSv. На `Gi0/2` устройства `R-CE` пакеты поступают **от сервера**, а не из Интернета.
+
+~~~ios
 conf t
  ip access-list extended TO-CLIENT-AS
   permit ip 203.0.113.0 0.0.0.255 198.18.100.0 0.0.0.255
@@ -25,8 +35,15 @@ conf t
  interface GigabitEthernet0/2
   ip policy route-map SERVER-RETURN
 end
-```
+~~~
 
-Expected in healthy baseline: replies to AS65031 go to GRE1; replies to AS65041/42 to GRE2. Verify `show ip policy`, `show route-map SERVER-RETURN` and pcap. Note: this is a **simplified PBR**; during GRE failure it can override the otherwise healthy alternate default route until PBR next-hop availability changes. Production designs need track-based failover, per-VRF designs or other tested mechanisms. Do not treat this as production-ready PBR.
+## Ожидаемый результат и проверки
 
-Remove using `no ip policy route-map SERVER-RETURN` under Gi0/2. Ensure failover is still tested both with PBR and without it.
+- Ответы в AS65031 направляются через GRE1, ответы в AS65041/42 — через GRE2.
+- Политика видна в `show ip policy` и `show route-map SERVER-RETURN`, а направление подтверждается захватом пакетов.
+
+**Ограничение:** это упрощённая PBR. При отказе GRE1/2 политика может продолжать переопределять доступный резервный маршрут, пока не изменится доступность next hop. Для эксплуатации необходимы проверенные механизмы отслеживания состояния, VRF или другие решения.
+
+## Восстановление
+
+На `R-CE Gi0/2` отмените применение политики командой `no ip policy route-map SERVER-RETURN`. Повторите проверку отказоустойчивости с PBR и без неё.

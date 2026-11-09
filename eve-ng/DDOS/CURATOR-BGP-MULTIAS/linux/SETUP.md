@@ -1,46 +1,54 @@
-# Optional Linux mode (CLIENT, BOT2, SERVER)
+# Linux-хосты для проверки HTTP и MTU
 
-This is a *separate generated `.unl`*, not the default VPCS lab. You need an **already installed** EVE-NG QEMU Linux image (directory starts with `linux-`). Do not assume the example image name exists.
+**Цель:** заменить часть VPCS на Linux для проверки HTTP, GRE и ограниченных тестов MTU/MSS.
 
-Create topology on PC:
+Это **дополнительный вариант лаборатории**, а не обязательная часть базового стенда. На сервере EVE-NG должен быть установлен совместимый Linux-образ QEMU, каталог которого начинается с `linux-`. Имя образа зависит от вашей установки.
 
-```bash
-python3 tools/build_lab.py \
-  --image 'ACTUAL_vios_DIRECTORY' \
-  --linux-image 'ACTUAL_linux_DIRECTORY' \
-  --output CURATOR-BGP-MULTIAS-V3-LINUX.unl
-python3 tools/check_lab.py CURATOR-BGP-MULTIAS-V3-LINUX.unl
-```
+## Подготовка
 
-Linux network device names differ. Use `ip -br link` to identify the actual NIC (e.g. `ens3`). These commands assume `ens3`. Do not execute if that interface is your existing management interface.
+1. Создайте копию исходной лаборатории в интерфейсе EVE-NG.
+2. В копии замените VPCS `CLIENT`, `BOT2` и `SERVER` на Linux-узлы, сохранив подключения к соответствующим сетевым сегментам. VPCS `BOT1` можно оставить без изменений.
+3. Запустите Linux-узлы, определите сетевые интерфейсы и настройте адреса вручную.
+4. Убедитесь, что маршрутизаторы загружены со встроенными конфигурациями и BGP/GRE работают.
 
-**CLIENT**
+**Важно:** в текущем репозитории нет генератора отдельного Linux-`.unl`; команды вида `tools/build_lab.py` из прежних описаний не применимы. Этот вариант настраивается в копии лаборатории средствами EVE-NG.
 
-```bash
+Имена интерфейсов Linux зависят от образа. Найдите нужный интерфейс командой `ip -br link`. Ниже используется пример `ens3`. **Не выполняйте эти команды на рабочем интерфейсе управления.**
+
+## Клиент CLIENT
+
+~~~bash
 sudo ip addr add 198.18.100.10/24 dev ens3
 sudo ip link set ens3 up
 sudo ip route replace default via 198.18.100.1
 curl --max-time 5 -v http://203.0.113.10/
-```
+~~~
 
-**BOT2 (only bounded, authorized tests on this isolated lab)**
+## Тестовый источник BOT2
 
-```bash
+Выполняйте только ограниченные и разрешённые проверки внутри изолированного стенда.
+
+~~~bash
 sudo ip addr add 198.18.102.10/24 dev ens3
 sudo ip link set ens3 up
 sudo ip route replace default via 198.18.102.1
 curl --max-time 5 -v http://203.0.113.10/
-```
+~~~
 
-**SERVER**
+## Сервер SERVER
 
-```bash
+~~~bash
 sudo ip addr add 203.0.113.10/24 dev ens3
 sudo ip link set ens3 up
 sudo ip route replace default via 203.0.113.1
 sudo python3 -m http.server 80 --bind 203.0.113.10
-```
+~~~
 
-When the source IPs match those in the baseline ACL, CLIENT HTTP should work while BOT2 HTTP is dropped by the ingress ACL of its POP. This is *not* genuine HTTP-layer WAF behavior. Inspect `show access-lists SCRUB-POLICY` to confirm counters. Host firewalls may need adjustment; do not change real network firewall policies.
+## Проверка
 
-**MTU:** GRE adds overhead; `ip mtu 1476` and TCP MSS 1436 on tunnels are starting values for 1500-byte underlay without additional encapsulation. Verify with DF-bit ping and packet capture.
+- HTTP-запрос `CLIENT` должен выполняться, запрос `BOT2` — блокироваться входной ACL своего POP.
+- Проверьте счётчики на POP командой `show access-lists SCRUB-POLICY`.
+- Это **не** проверка полноценного WAF или защиты HTTP на уровне приложений. В этой модели фильтрация основана на правилах ACL.
+- При необходимости проверьте правила межсетевого экрана **только на тестовых Linux-хостах**, не изменяя политики продуктивных сетей.
+
+**MTU:** GRE добавляет накладные расходы. Значения `ip mtu 1476` и TCP MSS 1436 подходят как отправная точка для подложки с MTU 1500 без дополнительных заголовков; подтвердите их тестами с DF-битом и захватом пакетов.

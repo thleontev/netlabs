@@ -1,29 +1,46 @@
-# 01 — Loss of GRE1, backup via internal CURATOR backbone
+# 01 — Отказ GRE1 и резервирование через внутреннюю сеть CURATOR
 
-Baseline: verify `show ip bgp 203.0.113.0` on both POPs, `show ip route 203.0.113.0` and iBGP peering with R-CUR-RR.
+**Цель:** проверить передачу трафика через второй POP при отказе туннеля GRE1.
 
-On **R-CUR1**:
+## Исходные условия
 
-```ios
+Убедитесь, что на обоих POP есть маршрут `203.0.113.0/24`, а у `R-CUR1` и `R-CUR2` установлены iBGP-соседства с `R-CUR-RR`. Используйте `show ip bgp 203.0.113.0`, `show ip route 203.0.113.0` и `show ip bgp summary`.
+
+## Задание
+
+На `R-CUR1` отключите GRE1:
+
+~~~ios
 conf t
  interface Tunnel1
   shutdown
 end
-```
+~~~
 
-Expected after BGP hold timer expiry:
-- CE loses eBGP to POP1, prefers default via POP2/GRE2.
-- POP2 continues learning protected /24 directly from CE and shares it with RR via iBGP (`next-hop-self`).
-- POP1 can continue advertising protected /24 to T1, but forwards it **internally via R-CUR-RR to POP2**, which sends it down GRE2.
-- Trace PCAP on the CUR1→RR and RR→CUR2 segments to prove internal fallback, not automatic reroute at R-T1.
+После завершения сходимости BGP проверьте ожидаемое поведение:
 
-**Limitations:** Tunnel interface line protocol may not reflect data-plane health for all failure types; do not assume GRE alone provides liveness. Check BGP, RIB and actual packets.
+1. `R-CE` теряет eBGP-сессию с POP1; для обратного трафика остаётся путь через POP2/GRE2.
+2. POP2 продолжает получать `203.0.113.0/24` непосредственно от `R-CE` и передаёт его Route Reflector по iBGP с `next-hop-self`.
+3. POP1 может продолжить анонсировать защищаемый префикс в `R-T1`, но направляет полученный трафик **через внутреннюю сеть `R-CUR1 → R-CUR-RR → R-CUR2`**, после чего POP2 отправляет его по GRE2.
+4. Проверьте маршрут на POP1 и снимите пакеты на соединениях `CUR1–RR` и `RR–CUR2`. Это позволит отличить внутреннее резервирование от переключения BGP-маршрута на `R-T1`.
 
-Restore:
+## Критерии выполнения
 
-```ios
+- После сходимости трафик к серверу доставляется через GRE2.
+- По таблицам маршрутизации и PCAP подтверждена фактическая цепочка пересылки.
+- Отсутствует ошибочная рекурсия маршрутов к GRE-эндпоинтам через GRE.
+
+**Важно:** состояние `Tunnel up/up` само по себе не подтверждает доступность удалённого конца при любом виде отказа. Проверяйте BGP, таблицу маршрутизации и передачу реальных пакетов.
+
+## Восстановление
+
+На `R-CUR1` включите туннель:
+
+~~~ios
 conf t
  interface Tunnel1
   no shutdown
 end
-```
+~~~
+
+Убедитесь, что eBGP-соседство и исходный маршрут восстановились.

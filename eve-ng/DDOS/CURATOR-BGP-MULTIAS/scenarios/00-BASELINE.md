@@ -1,12 +1,26 @@
-# 00 — Baseline / packet path
+# 00 — Исходное состояние и прохождение трафика
 
-1. Start routers first, paste matching `configs/R-*.cfg` into the correct IOSv console, `write memory`. Initialize the four VPCS per `vpcs/`.
-2. On R-CUR1, R-CUR2 and R-CUR-RR: `show ip ospf neighbor`, `show ip route ospf`.
-3. BGP: `show ip bgp summary` on all 11 routers. On CE expect 4 eBGP neighbors: two physical ISP and two GRE POP.
-4. On CE: `show ip route 198.18.0.21`, `show ip route 198.18.0.22`. These must resolve via **physical ISP1/ISP2** (/32 static), not via a tunnel.
-5. On R-T1 and R-T2: `show ip bgp 203.0.113.0`. AS_PATH via local POP should be `65020 65010`.
-6. On R-ACCESS-CLIENT: AS_PATH for 203.0.113.0/24 should be `65000 65020 65010`. On BOT1/BOT2 access routers should be `65001 65020 65010`.
-7. VPCS CLIENT: `ping 203.0.113.10` succeeds. BOT1/BOT2 ping should fail by POP ACL. Check counters with `show access-lists SCRUB-POLICY` on both POPs.
-8. Capture CE↔ISP1 or CE↔ISP2: decode GRE outer source/destination and internal packet. Capture from POP's ingress shows ordinary IP packet before GRE.
+**Цель:** проверить исходную работу BGP, OSPF, GRE, фильтрации и маршрутов до защищаемого сервера.
 
-**Important:** VPCS does not perform HTTP/HTTPS. To test a web service use optional Linux variant from `linux/SETUP.md`. Default return route on CE prefers CUR1; when ingress is CUR2, the return path may be asymmetric. See `04-RETURN-PATH.md`.
+## Подготовка
+
+1. Импортируйте `CURATOR-BGP-MULTIAS-V3.unl`. Для 11 маршрутизаторов IOSv предусмотрены встроенные начальные конфигурации. Убедитесь, что они включены в EVE-NG (**Startup-configs: ON**); вручную вставлять `configs/R-*.cfg` не требуется. Если маршрутизаторы ранее запускались с пустой NVRAM, остановите их и выполните **Wipe только для узлов данной лаборатории**.
+2. Запустите все маршрутизаторы, затем настройте четыре VPCS командами из каталога `vpcs/` и выполните `save` на каждом хосте.
+
+## Задания
+
+1. На `R-CUR1`, `R-CUR2` и `R-CUR-RR` проверьте соседства OSPF и маршруты командами `show ip ospf neighbor` и `show ip route ospf`.
+2. На всех 11 маршрутизаторах проверьте BGP командой `show ip bgp summary`. На `R-CE` ожидаются четыре eBGP-соседства: два физических подключения к ISP и два подключения к POP через GRE.
+3. На `R-CE` выполните `show ip route 198.18.0.21` и `show ip route 198.18.0.22`. Маршруты к внешним адресам GRE должны проходить **через физические ISP1/ISP2** благодаря статическим маршрутам `/32`, а не через туннели.
+4. На `R-T1` и `R-T2` проверьте маршрут `203.0.113.0/24` командой `show ip bgp 203.0.113.0`. Ожидаемый `AS_PATH` через локальный POP — `65020 65010`.
+5. На `R-ACCESS-CLIENT` ожидается `AS_PATH` к `203.0.113.0/24`: `65000 65020 65010`. На `R-ACCESS-BOT1` и `R-ACCESS-BOT2` — `65001 65020 65010`.
+6. На VPCS `CLIENT` выполните `ping 203.0.113.10`. Проверка должна быть успешной. Аналогичные ICMP-запросы от `BOT1` и `BOT2` должны блокироваться учебными ACL на POP. Проверьте счётчики командой `show access-lists SCRUB-POLICY` на обоих POP.
+7. Снимите трафик на линке `CE–ISP1` либо `CE–ISP2`. Найдите внешний и внутренний IP-заголовки GRE. Сравните с захватом пакетов на входе POP до инкапсуляции.
+
+## Критерии выполнения
+
+- Соседства OSPF и BGP установлены; маршрут защищаемого префикса присутствует.
+- `CLIENT` достигает `SERVER`; тестовые источники `BOT1` и `BOT2` блокируются согласно ACL.
+- В захвате пакетов подтверждён путь через GRE, а не напрямую через ISP.
+
+**Ограничения:** VPCS не выполняют запросы HTTP/HTTPS. Для проверки веб-сервиса используйте Linux-хосты по инструкции [`linux/SETUP.md`](../linux/SETUP.md). Обратный маршрут на `R-CE` по умолчанию предпочитает CUR1, поэтому вход через CUR2 может создавать асимметрию; см. [сценарий 04](04-RETURN-PATH.md).

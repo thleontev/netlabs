@@ -1,12 +1,23 @@
-# 05 — Linux web tests, MTU / TCP MSS
+# 05 — HTTP-проверки, MTU и TCP MSS при использовании GRE
 
-Use the optional Linux `.unl` generated as in `linux/SETUP.md` (replaces CLIENT, BOT2, SERVER). Configure static addresses and a Python web server on TCP/80.
+**Цель:** проверить прохождение HTTP через центр очистки, блокировку тестового источника и влияние GRE-инкапсуляции на размер пакетов.
 
-Expected:
-- Linux CLIENT `curl http://203.0.113.10/` receives HTTP 200.
-- Linux BOT2 `curl --max-time 5 http://203.0.113.10/` times out on TCP due to POP ingress ACL. This is **source-based ACL**, not WAF/behavior analysis.
-- ACL counters on POP2 increment for BOT2.
-- Capture ISP-to-CE: GRE protocol 47 outer header, internal TCP segments; use Wireshark display filter `gre`.
-- Verify effective GRE PMTU and MSS (`ip mtu 1476` and `ip tcp adjust-mss 1436` in supplied router configs). Test controlled DF probes; not every Linux image contains `ping -M do`.
+## Подготовка
 
-Do not run unbounded traffic flood generators. This training lab does not replicate real-world volumetric capacity or provider mitigation algorithms.
+Используйте дополнительный вариант лаборатории с Linux-хостами вместо `CLIENT`, `BOT2` и `SERVER` по инструкции [`linux/SETUP.md`](../linux/SETUP.md). Настройте статические IP-адреса и HTTP-сервер на TCP/80.
+
+## Задания и ожидаемые результаты
+
+1. На Linux `CLIENT` выполните `curl http://203.0.113.10/`. Ожидается успешный ответ HTTP 200.
+2. На Linux `BOT2` выполните `curl --max-time 5 http://203.0.113.10/`. Запрос должен завершиться по тайм-ауту из-за входной ACL на POP. Это **фильтрация по адресу источника**, а не WAF или анализ поведения.
+3. На POP2 проверьте увеличение счётчиков ACL после запроса `BOT2`.
+4. Снимите трафик между ISP и CE. Найдите внешний заголовок GRE (IP-протокол 47) и вложенные сегменты TCP. Для Wireshark используйте фильтр `gre`.
+5. Проверьте MTU/PMTU туннелей и TCP MSS: в приложенных конфигурациях заданы `ip mtu 1476` и `ip tcp adjust-mss 1436`. Выполните ограниченные тесты с установленным DF-битом; команда `ping -M do` может отсутствовать в некоторых Linux-образах.
+
+## Критерии выполнения
+
+- HTTP от `CLIENT` работает; запрос `BOT2` блокируется, что подтверждено счётчиками ACL.
+- В PCAP видны внешний и внутренний IP-заголовки GRE.
+- Измеренные MTU и MSS соответствуют условиям используемой сетевой подложки либо причины расхождения документированы.
+
+**Ограничение:** не запускайте генераторы неограниченного потока пакетов. Учебная лаборатория не моделирует реальные объёмы DDoS или алгоритмы промышленной системы защиты.

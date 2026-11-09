@@ -6,6 +6,6 @@
 
 | Лаборатория | Содержание | Статус |
 |---|---|---|
-| [CURATOR-BGP-MULTIAS](CURATOR-BGP-MULTIAS/README.md) | Multi-AS BGP, два транзитных оператора, два ISP, два POP очистки, GRE, OSPF, iBGP/RR, резервирование и обход защиты; 11 IOSv и 4 VPCS | Startup-config 11 IOSv встроены в UNL; статические проверки выполнены, запуск в EVE-NG CE не подтверждён |
+| [CURATOR-BGP-MULTIAS](CURATOR-BGP-MULTIAS/README.md) | BGP между несколькими AS, два транзитных оператора, два провайдера доступа, два центра очистки, GRE, OSPF, iBGP/RR, резервирование и проверка обхода фильтрации; 11 IOSv и 4 VPCS | Начальные конфигурации всех 11 IOSv встроены в UNL; статическая проверка пройдена, запуск в EVE-NG CE не подтверждён |
 
 **Быстрый старт:** [инструкция импорта](CURATOR-BGP-MULTIAS/README.md#установка-в-eve-ng-ce) · [готовая топология EVE-NG](CURATOR-BGP-MULTIAS/CURATOR-BGP-MULTIAS-V3.unl) · [SVG-схема сети](CURATOR-BGP-MULTIAS/topology.svg).

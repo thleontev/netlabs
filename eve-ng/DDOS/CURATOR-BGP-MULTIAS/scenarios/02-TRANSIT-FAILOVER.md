@@ -1,16 +1,32 @@
-# 02 — Loss of POP1 transit connection
+# 02 — Отказ транзитного подключения POP1
 
-On **R-T1** shut down Gi0/1 (towards CUR1):
+**Цель:** проверить доступность защищаемой сети при потере связи между транзитным оператором AS65000 и первым POP.
 
-```ios
+## Задание
+
+На `R-T1` отключите интерфейс `GigabitEthernet0/1` в сторону `R-CUR1`:
+
+~~~ios
 conf t
  interface GigabitEthernet0/1
   shutdown
 end
-```
+~~~
 
-This removes external R-T1 ↔ CUR1 BGP. After reconvergence, AS65000 may reach 203.0.113.0/24 via **AS65001 → CUR2**. Confirm `show ip bgp 203.0.113.0` on R-T1 and R-ACCESS-CLIENT; expected longer AS_PATH from client `65000 65001 65020 65010`. Expect GRE1 to lose underlay reachability and CE to use GRE2 after hold timeout.
+## Ожидаемое поведение
 
-Restore `no shutdown` on R-T1 Gi0/1.
+1. Внешнее eBGP-соседство `R-T1 ↔ R-CUR1` разрывается.
+2. После сходимости AS65000 может получать `203.0.113.0/24` через **AS65001 → CUR2**.
+3. На `R-T1` и `R-ACCESS-CLIENT` проверьте `show ip bgp 203.0.113.0`. Ожидаемый `AS_PATH` со стороны клиента при использовании резервного пути: `65000 65001 65020 65010`.
+4. Проверьте доступность внешнего адреса GRE1 и состояние BGP-соседств на `R-CE`. При утрате связности первого туннеля должен оставаться путь через GRE2; фактическое переключение зависит от таймеров и доступных маршрутов.
 
-Also test failure of the **T1–T2** link, but do this as a separate experiment: some source ASes will lose reachability to remote POPs; the baseline topology has only one inter-transit peering, so it is not a fully meshed global Internet. See README limitations.
+## Критерии выполнения
+
+- Маршрут до защищаемого сервера сохраняется через резервный транзит и POP2.
+- Изменение `AS_PATH` и прохождение пакетов подтверждены командами диагностики и захватом трафика.
+
+## Восстановление и дополнительное задание
+
+Верните `R-T1 GigabitEthernet0/1` в работу командой `no shutdown` и проверьте возврат маршрутов.
+
+В **отдельном эксперименте** отключите соединение `R-T1–R-T2`. Зафиксируйте, какие исходные AS потеряют связь с удалённым POP: в учебной топологии между двумя транзитными операторами только одно eBGP-соединение, поэтому она не моделирует полностью связный Интернет.

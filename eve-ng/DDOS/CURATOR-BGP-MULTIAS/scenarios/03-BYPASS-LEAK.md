@@ -1,22 +1,24 @@
-# 03 — Route leak / bypass of scrubbing
+# 03 — Утечка маршрута и обход центра очистки
 
-**Intentional temporary misconfiguration — run in isolated EVE lab only.** Baseline `R-CE` must not export protected /24 directly to ISP1.
+**Цель:** показать, как ошибочный прямой анонс защищаемого префикса через обычного ISP может перенаправить трафик в обход фильтрации.
 
-## Step 1: Allow CE to export directly to ISP1
+**Условия:** эксперимент выполняется только в изолированной лаборатории EVE-NG. В исходном состоянии `R-CE` не должен анонсировать `203.0.113.0/24` напрямую в ISP1.
 
-On **R-CE**:
+## Задание 1. Разрешить прямой анонс от CE в ISP1
 
-```ios
+На `R-CE`:
+
+~~~ios
 conf t
  router bgp 65010
   no neighbor 198.18.11.1 prefix-list DENY-ALL out
   neighbor 198.18.11.1 prefix-list PROTECTED out
 end
-```
+~~~
 
-On **R-ISP1** allow protected prefix from CE and re-export it to T1:
+На `R-ISP1` разрешите получение защищаемого префикса от CE и его передачу в `R-T1`:
 
-```ios
+~~~ios
 conf t
  ip prefix-list PROTECTED seq 5 permit 203.0.113.0/24
  ip prefix-list ISP1-LEAK seq 5 permit 198.18.11.0/30
@@ -27,23 +29,27 @@ conf t
   no neighbor 10.1.0.9 prefix-list ISP1-EXPORT out
   neighbor 10.1.0.9 prefix-list ISP1-LEAK out
 end
-```
+~~~
 
-On **R-T1** extend inbound whitelist for ISP1:
+На `R-T1` добавьте защищаемый префикс во входной список разрешённых маршрутов ISP1:
 
-```ios
+~~~ios
 conf t
  ip prefix-list ISP1-IN seq 10 permit 203.0.113.0/24
 end
-```
+~~~
 
-R-T1 already has a `FROM-ISP1` inbound route map that assigns leaked protected prefix **local preference 350**. Its normal path from CUR1 has local preference 100; route through ISP1 now wins.
+## Задание 2. Проверить выбор маршрута
 
-Check on R-T1: `show ip bgp 203.0.113.0` now selects AS_PATH `65011 65010`, **not** `65020 65010`. A CLIENT behind AS65031 now bypasses scrubbing (though CLIENT is allowed in baseline anyway).
+На `R-T1` уже используется входная `route-map FROM-ISP1`, которая назначает утёкшему маршруту `local-preference 350`. Обычный путь через CUR1 имеет `local-preference 100`, поэтому при корректном применении политик предпочтение получит ISP1.
 
-To visibly demonstrate bypass from a blocked BOT behind AS65041/42, optionally prefer the leaked route at **R-T2**:
+Командой `show ip bgp 203.0.113.0` убедитесь, что выбран `AS_PATH 65011 65010` вместо `65020 65010`. Трафик от `CLIENT` в таком случае обходит POP и его ACL.
 
-```ios
+## Задание 3. Проверить обход со стороны тестовых источников
+
+Чтобы увидеть эффект на трафике, который обычно блокируется, можно **временно** предпочесть утёкший маршрут на `R-T2`:
+
+~~~ios
 conf t
  route-map PREFER-LEAK permit 10
   match ip address prefix-list PROTECTED
@@ -53,17 +59,20 @@ conf t
  router bgp 65001
   neighbor 10.1.0.1 route-map PREFER-LEAK in
 end
-```
+~~~
 
-After policy refresh (or soft inbound route refresh), R-T2 prefers the longer leaked route via T1, and a BOT1/BOT2 ICMP echo may pass because the path bypasses CUR1/CUR2 ACLs. Check `show ip route 203.0.113.10`, traceroute and POP ACL counters. **Do not assume policy took effect without checking BGP best-path.**
+После обновления маршрутов BGP проверьте лучший путь на `R-T2`. При выборе пути через `R-T1/ISP1` ICMP-запросы `BOT1` и `BOT2` могут достичь сервера в обход ACL двух POP.
 
-## Restore clean config
+Используйте `show ip route 203.0.113.10`, трассировку и счётчики `show access-lists SCRUB-POLICY`. **Не считайте обход подтверждённым, пока не проверен лучший маршрут BGP и фактический путь пакетов.**
 
-Reverse the steps, or simply reapply baseline `.cfg` after `write erase`/reload of nodes **only inside this lab**. For production devices this is inappropriate. More specifically:
+## Восстановление исходных политик
 
-- CE: export `DENY-ALL` to ISP1, remove `PROTECTED` filter.
-- ISP1: filter `DENY-ALL` inbound CE; restore `ISP1-EXPORT` outbound T1.
-- T1: delete `ip prefix-list ISP1-IN seq 10`.
-- T2: remove `neighbor 10.1.0.1 route-map PREFER-LEAK in` if added.
+- На `R-CE` верните выходной фильтр `DENY-ALL` в сторону ISP1 и отмените экспорт `PROTECTED`.
+- На `R-ISP1` восстановите входной `DENY-ALL` со стороны CE и выходной `ISP1-EXPORT` в сторону T1.
+- На `R-T1` удалите `ip prefix-list ISP1-IN seq 10`.
+- На `R-T2`, если изменяли политику, удалите `neighbor 10.1.0.1 route-map PREFER-LEAK in`.
+- Повторно проверьте BGP и работу фильтрации на POP.
 
-Recheck BGP and pop filtering. Documentation: `https://docs.curator.pro/connect/bgp.html`.
+При необходимости восстановите исходные конфигурации из `configs/*.cfg` **только на узлах этой лаборатории**. Не применяйте стирание конфигурации к реальным устройствам.
+
+Справка: https://docs.curator.pro/connect/bgp.html
