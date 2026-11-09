@@ -8,7 +8,7 @@
 
 | Раздел | Лаборатория | Что изучается |
 |---|---|---|
-| [IGP / OSPF](eve-ng/IGP/OSPF/) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Многообластная маршрутизация OSPF; проект `.unl`, конфигурации устройств и схема |
+| [IGP](eve-ng/IGP/README.md) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Внутренние протоколы маршрутизации (OSPF, в дальнейшем IS-IS и другие); сейчас — OSPF Multiarea |
 | [MPLS](eve-ng/MPLS/README.md) | [MPLS Service Provider Advanced](eve-ng/MPLS/MPLS%20Service%20Provider%20Advanced/README.md) | OSPF underlay, LDP, L3VPN, MP-BGP VPNv4, Route Reflector, VRF и отказоустойчивость |
 | [VXLAN](eve-ng/VXLAN/README.md) | [VXLAN-FABRIC](eve-ng/VXLAN/VXLAN-FABRIC/README.md) | Leaf–Spine, OSPF, BGP EVPN, L2/L3 VNI, Symmetric IRB, VRF и сценарии отказов |
 | [DDoS](eve-ng/DDOS/README.md) | [CURATOR-BGP-MULTIAS](eve-ng/DDOS/CURATOR-BGP-MULTIAS/README.md) | Multi-AS BGP, два транзитных оператора, GRE, два POP защиты, резервирование и проверка путей трафика |
