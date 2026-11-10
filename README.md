@@ -8,12 +8,12 @@
 
 | Раздел | Лаборатории | Что изучается |
 |---|---|---|
-| [IGP](eve-ng/IGP/README.md) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Внутренние протоколы маршрутизации: OSPF; в дальнейшем — IS-IS и другие |
+| [L2](eve-ng/L2/README.md) | [MSTP Multi-Region](eve-ng/L2/STP/MSTP-Multi-Region/README.md) | 3 MST-региона, CIST/IST, MSTI1, границы с Rapid-PVST, отказоустойчивость Ethernet |\n| [IGP](eve-ng/IGP/README.md) | [OSPF Multiarea](eve-ng/IGP/OSPF/OSPF%20Multiarea%20%28topology%201%29/) | Внутренние протоколы маршрутизации: OSPF; в дальнейшем — IS-IS и другие |
 | [MPLS](eve-ng/MPLS/README.md) | [MPLS Service Provider Advanced](eve-ng/MPLS/MPLS%20Service%20Provider%20Advanced/README.md) | OSPF underlay, LDP, L3VPN, MP-BGP VPNv4, Route Reflector, VRF и отказоустойчивость |
 | [VXLAN](eve-ng/VXLAN/README.md) | [VXLAN-FABRIC](eve-ng/VXLAN/VXLAN-FABRIC/README.md) | Leaf–Spine, OSPF, BGP EVPN, L2/L3 VNI, Symmetric IRB, VRF и сценарии отказов |
 | [DDoS](eve-ng/DDOS/README.md) | [CURATOR-BGP-MULTIAS](eve-ng/DDOS/CURATOR-BGP-MULTIAS/README.md) | Multi-AS BGP, два транзитных оператора, GRE, два POP защиты, резервирование и проверка путей трафика |
 
-**С чего начать:** [импорт MPLS в EVE-NG](eve-ng/MPLS/MPLS%20Service%20Provider%20Advanced/IMPORT-RU.md) · [запуск VXLAN-FABRIC](eve-ng/VXLAN/VXLAN-FABRIC/README.md#требования-и-установка) · [сценарии DDoS-лаборатории](eve-ng/DDOS/CURATOR-BGP-MULTIAS/README.md#практические-сценарии).
+**С чего начать:** [MSTP Multi-Region](eve-ng/L2/STP/MSTP-Multi-Region/README.md#быстрый-старт) · [импорт MPLS в EVE-NG](eve-ng/MPLS/MPLS%20Service%20Provider%20Advanced/IMPORT-RU.md) · [запуск VXLAN-FABRIC](eve-ng/VXLAN/VXLAN-FABRIC/README.md#требования-и-установка) · [сценарии DDoS-лаборатории](eve-ng/DDOS/CURATOR-BGP-MULTIAS/README.md#практические-сценарии).
 
 ## GNS3
 
