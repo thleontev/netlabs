@@ -2,7 +2,7 @@
 
 ## 1. Область применения
 
-Стандарт обязателен для **новых** EVE-NG/GNS3 лабораторий. Для старых GNS3-проектов применяется постепенно и без изменения содержимого. Режимы агента и границы изменений определены в [AGENTS.md](../../AGENTS.md). Это учебный репозиторий: не требуется превращать каждую лабораторию в отдельный программный пакет.
+Стандарт обязателен для **новых** EVE-NG/GNS3 лабораторий. Для старых GNS3-проектов применяется постепенно и без изменения содержимого. Режимы агента и границы изменений определены в [RULES.md](../RULES.md). Это учебный репозиторий: не требуется превращать каждую лабораторию в отдельный программный пакет.
 
 ## 2. Навигация
 
@@ -71,14 +71,14 @@
 
 ## 6. Контроль качества
 
-**Базовая команда:** python3 tools/validate_netlabs.py --lab "eve-ng/MPLS/MPLS Service Provider Advanced"
+**Базовая команда:** python3 .agents/tools/validate_netlabs.py --lab "eve-ng/MPLS/MPLS Service Provider Advanced"
 
-**Проверка всех файлов:** python3 tools/validate_netlabs.py --all
+**Проверка всех файлов:** python3 .agents/tools/validate_netlabs.py --all
 
-**Автотесты валидатора:** python3 -m unittest discover -s tests -v
+**Автотесты валидатора:** python3 -m unittest discover -s .agents/tests -v
 
 Валидатор не запускает виртуальные устройства. Он сообщает ERROR об ошибках структуры, WARN о документации и неоднозначном соответствии .cfg; флаги --strict-docs и --strict-configs повышают соответствующие предупреждения до ошибок. Для стадий, преобразований startup-config и специфики платформ всегда запускать локальные lab/tools/*validate* либо *check*; общий валидатор не заменяет их. Ни один скрипт проверки не должен автоматически исправлять .unl/.cfg.
 
 ## 7. Ссылки на шаблоны
 
-[Категория](../../templates/category-README.md) · [Лаборатория](../../templates/lab-README.md) · [Импорт](../../templates/IMPORT-RU.md) · [Упражнения](../../templates/EXERCISES.md) · [Диагностика](../../templates/DIAGNOSTICS.md) · [Сценарий](../../templates/SCENARIO.md)
+[Категория](../templates/category-README.md) · [Лаборатория](../templates/lab-README.md) · [Импорт](../templates/IMPORT-RU.md) · [Упражнения](../templates/EXERCISES.md) · [Диагностика](../templates/DIAGNOSTICS.md) · [Сценарий](../templates/SCENARIO.md)
