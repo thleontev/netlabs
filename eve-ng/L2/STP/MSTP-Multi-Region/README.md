@@ -1,6 +1,6 @@
 # MSTP Multi-Region — EVE-NG
 
-Лабораторная работа по **Multiple Spanning Tree Protocol (MSTP / IEEE 802.1s)**: три независимых MST-региона, общий CIST, внутренние деревья MSTI, граничные порты и совместимость с **Rapid-PVST+**. Топология восстановлена из исходного `mstp_multi_region(1).unl`; все исходные 10 узлов, 17 линков, приоритеты и стоимость путей сохранены.
+Лабораторная работа по **Multiple Spanning Tree Protocol (MSTP / IEEE 802.1s)**: три независимых MST-региона, общий CIST, внутренние деревья MSTI, граничные порты и совместимость с **Rapid-PVST+**.
 
 ![Топология](topology.svg)
 
